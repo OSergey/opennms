@@ -36,9 +36,9 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "REQUEST")
 public class Request {
     
-    @XmlElement(name = "Engine", required = true)
+    @XmlElement(name = "ENGINE", required = true)
     protected Engine engine;
-    @XmlElement(name = "Begin", required = true)
+    @XmlElement(name = "BEGIN", required = true)
     protected Begin begin;
     @XmlElement(name = "ASKING_FOR", required = true)
     protected String askingfor;
@@ -48,11 +48,11 @@ public class Request {
     protected String wanted;
     @XmlElement(name = "OFFSET", required = true)
     protected String offset;
-    @XmlElement(name = "Id")
+    @XmlElement(name = "ID")
     protected List<Id> id;
-    @XmlElement(name = "Tag")
+    @XmlElement(name = "TAG")
     protected List<Tag> tag;
-    @XmlElement(name = "USERId")
+    @XmlElement(name = "USERID")
     protected List<UserId> userId;
 
     /**
