@@ -20,36 +20,36 @@ import javax.xml.bind.annotation.XmlValue;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "value"
+    "_value"
 })
 @XmlRootElement(name = "ID")
 public class Id {
 
     @XmlValue
-    protected String value;
+    protected String _value;
 
     /**
-     * Gets the value of the value property.
+     * Gets the _value of the _value property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getvalue() {
-        return value;
+    public String getValue() {
+        return _value;
     }
 
     /**
-     * Sets the value of the value property.
+     * Sets the _value of the _value property.
      * 
-     * @param value
+     * @param _value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setvalue(String value) {
-        this.value = value;
+    public void setValue(String _value) {
+        this._value = _value;
     }
 
 }

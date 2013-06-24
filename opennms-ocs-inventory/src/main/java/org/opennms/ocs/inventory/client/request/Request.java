@@ -23,142 +23,142 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "engine",
-    "begin",
-    "askingfor",
-    "checksum",
-    "offset",
-    "wanted",
-    "id",
-    "tag",
-    "userId"
+    "_engine",
+    "_begin",
+    "_askingfor",
+    "_checksum",
+    "_offset",
+    "_wanted",
+    "_id",
+    "_tag",
+    "_userId"
 })
 @XmlRootElement(name = "REQUEST")
 public class Request {
     
     @XmlElement(name = "ENGINE", required = true)
-    protected Engine engine;
+    protected Engine _engine;
     @XmlElement(name = "BEGIN", required = true)
-    protected Begin begin;
+    protected Begin _begin;
     @XmlElement(name = "ASKING_FOR", required = true)
-    protected String askingfor;
+    protected String _askingfor;
     @XmlElement(name = "CHECKSUM", required = true)
-    protected String checksum;
+    protected String _checksum;
     @XmlElement(name = "WANTED", required = true)
-    protected String wanted;
+    protected String _wanted;
     @XmlElement(name = "OFFSET", required = true)
-    protected String offset;
+    protected String _offset;
     @XmlElement(name = "ID")
-    protected List<Id> id;
+    protected List<Id> _id;
     @XmlElement(name = "TAG")
-    protected List<Tag> tag;
+    protected List<Tag> _tag;
     @XmlElement(name = "USERID")
-    protected List<UserId> userId;
+    protected List<UserId> _userId;
 
     /**
-     * Gets the value of the begin property.
+     * Gets the value of the _begin property.
      * 
      * @return
      *     possible object is
-     *     {@link begin }
+     *     {@link _begin }
      *     
      */
     public Begin getBegin() {
-        return begin;
+        return _begin;
     }
 
     /**
-     * Sets the value of the begin property.
+     * Sets the value of the _begin property.
      * 
      * @param value
      *     allowed object is
-     *     {@link begin }
+     *     {@link _begin }
      *     
      */
     public void setBegin(Begin value) {
-        this.begin = value;
+        this._begin = value;
     }
 
     /**
-     * Gets the value of the askingfor property.
+     * Gets the value of the _askingfor property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getASKINGFOR() {
-        return askingfor;
+    public String getAskingfor() {
+        return _askingfor;
     }
 
     /**
-     * Sets the value of the askingfor property.
+     * Sets the value of the _askingfor property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setASKINGFOR(String value) {
-        this.askingfor = value;
+    public void setAskingfor(String value) {
+        this._askingfor = value;
     }
 
     /**
-     * Gets the value of the checksum property.
+     * Gets the value of the _checksum property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getCHECKSUM() {
-        return checksum;
+    public String getChecksum() {
+        return _checksum;
     }
 
     /**
-     * Sets the value of the checksum property.
+     * Sets the value of the _checksum property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setCHECKSUM(String value) {
-        this.checksum = value;
+    public void setChecksum(String value) {
+        this._checksum = value;
     }
 
     /**
-     * Gets the value of the wanted property.
+     * Gets the value of the _wanted property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getWANTED() {
-        return wanted;
+    public String getWanted() {
+        return _wanted;
     }
 
     /**
-     * Sets the value of the wanted property.
+     * Sets the value of the _wanted property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setWANTED(String value) {
-        this.wanted = value;
+    public void setWanted(String value) {
+        this._wanted = value;
     }
 
     /**
-     * Gets the value of the id property.
+     * Gets the value of the _id property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the id property.
+     * returned list will be present ins_ide the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the _id property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
@@ -174,20 +174,20 @@ public class Request {
      * 
      */
     public List<Id> getId() {
-        if (id == null) {
-            id = new ArrayList<Id>();
+        if (_id == null) {
+            _id = new ArrayList<Id>();
         }
-        return this.id;
+        return this._id;
     }
 
     /**
-     * Gets the value of the tag property.
+     * Gets the value of the _tag property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the tag property.
+     * returned list will be present ins_ide the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the _tag property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
@@ -203,20 +203,20 @@ public class Request {
      * 
      */
     public List<Tag> getTag() {
-        if (tag == null) {
-            tag = new ArrayList<Tag>();
+        if (_tag == null) {
+            _tag = new ArrayList<Tag>();
         }
-        return this.tag;
+        return this._tag;
     }
 
     /**
-     * Gets the value of the userId property.
+     * Gets the value of the _userId property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the userId property.
+     * returned list will be present ins_ide the JAXB object.
+     * This is why there is not a <CODE>set</CODE> method for the _userId property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
@@ -232,26 +232,34 @@ public class Request {
      * 
      */
     public List<UserId> getUserId() {
-        if (userId == null) {
-            userId = new ArrayList<UserId>();
+        if (_userId == null) {
+            _userId = new ArrayList<UserId>();
         }
-        return this.userId;
+        return this._userId;
     }
 
     public Engine getEngine() {
-        return engine;
+        return _engine;
     }
 
-    public void setEngine(Engine engine) {
-        this.engine = engine;
+    public void setEngine(Engine _engine) {
+        this._engine = _engine;
     }
 
     public String getOffset() {
-        return offset;
+        return _offset;
     }
 
-    public void setOffset(String offset) {
-        this.offset = offset;
+    public void setOffset(String _offset) {
+        this._offset = _offset;
+    }
+
+    @Override
+    public String toString() {
+        return "Request [_engine=" + _engine + ", _begin=" + _begin
+                + ", _askingfor=" + _askingfor + ", _checksum=" + _checksum
+                + ", _wanted=" + _wanted + ", _offset=" + _offset + ", _id="
+                + _id + ", _tag=" + _tag + ", _userId=" + _userId + "]";
     }
 
 }
