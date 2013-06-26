@@ -10,6 +10,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.namespace.QName;
 import javax.xml.soap.MessageFactory;
+import javax.xml.soap.MimeHeaders;
 import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPBodyElement;
 import javax.xml.soap.SOAPConnection;
@@ -26,6 +27,8 @@ import org.opennms.ocs.inventory.client.request.Engine;
 import org.opennms.ocs.inventory.client.request.Request;
 import org.opennms.ocs.inventory.client.request.RequestFactory;
 import org.opennms.ocs.inventory.client.response.Computers;
+
+
 
 /**
  * The Class OcsInventoryClientLogicImp.
@@ -69,9 +72,11 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
      */
     public void init(String host, String login, String password)
             throws SOAPException {
-
-        m_url = String.format("http://%s:%s@%s/ocsinterface", login,
-                              password, host);
+        
+        m_login = login;
+        m_password = password;
+        
+        m_url = String.format("http://%s/ocsinterface", host);
         m_urlNameSpaceXml = String.format("http://%s/Apache/Ocsinventory/Interface",
                                           host);
 
@@ -132,6 +137,11 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
                                        "http://www.w3.org/2001/XMLSchema");
         header.addNamespaceDeclaration("soap",
                                        "http://schemas.xmlsoap.org/soap/envelope/");
+        
+
+        MimeHeaders hd = soapMessage.getMimeHeaders();
+        String authorization = com.sun.org.apache.xml.internal.security.utils.Base64.encode((m_login + ":" + m_password).getBytes());
+        hd.addHeader("Authorization", "Basic " + authorization);
 
         // SOAP Body
         RequestFactory objFact = new RequestFactory();

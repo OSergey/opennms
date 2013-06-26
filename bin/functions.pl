@@ -68,7 +68,7 @@ delete $ENV{'M2_HOME'};
 # maven options
 $MAVEN_OPTS = $ENV{'MAVEN_OPTS'};
 if (not defined $MAVEN_OPTS or $MAVEN_OPTS eq '') {
-	$MAVEN_OPTS = '-XX:PermSize=512m -XX:MaxPermSize=1g -Xmx1g -XX:ReservedCodeCacheSize=512m';
+	$MAVEN_OPTS = '-XX:PermSize=368m -XX:MaxPermSize=512m -Xmx512m -XX:ReservedCodeCacheSize=512m';
 }
 
 my $result = GetOptions(
