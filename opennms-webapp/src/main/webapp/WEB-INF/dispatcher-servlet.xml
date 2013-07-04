@@ -252,6 +252,16 @@
         </property>
         <property name="nodeProvisionService" ref="nodeProvisionService"/>
     </bean>
+    
+    <bean name="/admin/node/import.htm" class="org.opennms.web.controller.node.ImportNodeProvisioningController">
+        <property name="redirectView">
+            <value>import.htm</value>
+        </property>
+        <property name="successView">
+            <value>admin/node/import</value>
+        </property>
+        <property name="nodeProvisionService" ref="nodeProvisionService"/>
+    </bean>
 
     <bean name="/alarm/ticket/create.htm" class="org.opennms.web.controller.alarm.AlarmTicketController">
         <property name="troubleTicketProxy" ref="troubleTicketProxy"/>
@@ -573,6 +583,12 @@
                     <property name="name" value="Add Node"/>
                     <property name="url" value="admin/node/add.htm"/>
                     <property name="locationMatch" value="addNode"/>
+                </bean>
+                
+                <bean class="org.opennms.web.navigate.ProvisionUserNavBarEntry">
+                    <property name="name" value="Import Node"/>
+                    <property name="url" value="admin/node/import.htm"/>
+                    <property name="locationMatch" value="importNode"/>
                 </bean>
 
                 <bean class="org.opennms.web.navigate.AdminUserNavBarEntry">
