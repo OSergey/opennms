@@ -40,6 +40,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.servlet.view.RedirectView;
+import org.opennms.ocs.inventory.client.response.Computer;
 
 /**
  * Node list controller.
@@ -71,6 +72,7 @@ public class ImportNodeProvisioningController extends AbstractController impleme
         String redirectParms = request.getParameter("redirectParms");
         String redirect      = request.getParameter("redirect");
 
+        Computer  cmp = new Computer();
         if (action == null || !action.equals("add")) {
             ModelAndView modelAndView = m_nodeProvisionService.getModelAndView(request);
             modelAndView.setViewName(m_successView);

@@ -13,7 +13,7 @@
     <moduleName>org.opennms.dashboard.Dashboard</moduleName>
     <moduleHtml>index.html</moduleHtml>
     <web.port>8080</web.port>
-		<!-- this is used by runInPlace.sh to get the overwise provided 
+		<!-- this is used by runInPlace.sh to get the overwise provided
 				 onms libs into the WEB-INF/lib for jetty -->
 		<onmsLibScope>provided</onmsLibScope>
   </properties>
@@ -371,7 +371,7 @@
       <artifactId>opennms-web-dependencies</artifactId>
       <type>pom</type>
       <scope>${onmsLibScope}</scope>
-      <!-- 
+      <!--
         We have to exclude this Java compiler from the classpath because it
         conflicts with one bundled inside gwt-dev that is used when GWT compiles
         code into Javascript.
@@ -448,7 +448,7 @@
       <groupId>org.opennms.features</groupId>
       <artifactId>org.opennms.features.instrumentationLogReader</artifactId>
       <scope>${onmsLibScope}</scope>
-    </dependency>   
+    </dependency>
     <dependency>
       <groupId>org.opennms.features</groupId>
       <artifactId>org.opennms.features.node-page-list</artifactId>
@@ -630,6 +630,12 @@
     <dependency>
       <groupId>struts</groupId>
       <artifactId>struts</artifactId>
+      <scope>${onmsLibScope}</scope>
+    </dependency>
+    <dependency>
+      <groupId>opennms-client-ocs-inventory</groupId>
+      <artifactId>opennms-ocs-inventory</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
       <scope>${onmsLibScope}</scope>
     </dependency>
 
