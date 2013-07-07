@@ -129,6 +129,12 @@
       <artifactId>spring-web-dependencies</artifactId>
       <type>pom</type>
     </dependency>
+    <dependency>
+      <groupId>opennms-client-ocs-inventory</groupId>
+      <artifactId>opennms-ocs-inventory</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+
     <!-- runtime only dependencies -->
     <dependency>
       <groupId>org.opennms</groupId>

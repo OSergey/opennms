@@ -72,4 +72,14 @@ public interface NodeProvisionService {
             String snmpCommunity, String snmpVersion,
             String deviceUsername, String devicePassword, String enablePassword,
             String accessMethd, String autoEnable, String noSNMP) throws Exception;
+
+    /**
+     * Import provision node.
+     *
+     * @param host the host
+     * @param login the login
+     * @param password the password
+     * @return the boolean
+     */
+    public boolean importProvisionNode(String host, String login, String password);
 }

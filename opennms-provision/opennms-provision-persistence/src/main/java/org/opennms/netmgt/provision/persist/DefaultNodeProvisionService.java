@@ -28,8 +28,6 @@
 
 package org.opennms.netmgt.provision.persist;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.opennms.core.utils.BeanUtils;
 import org.opennms.core.utils.ThreadCategory;
 import org.opennms.netmgt.EventConstants;
@@ -42,24 +40,26 @@ import org.opennms.netmgt.model.events.EventBuilder;
 import org.opennms.netmgt.model.events.EventForwarder;
 import org.opennms.netmgt.model.events.EventProxy;
 import org.opennms.netmgt.model.events.EventProxyException;
-import org.opennms.netmgt.provision.persist.requisition.Requisition;
-import org.opennms.netmgt.provision.persist.requisition.RequisitionAsset;
-import org.opennms.netmgt.provision.persist.requisition.RequisitionCategory;
-import org.opennms.netmgt.provision.persist.requisition.RequisitionInterface;
-import org.opennms.netmgt.provision.persist.requisition.RequisitionMonitoredService;
-import org.opennms.netmgt.provision.persist.requisition.RequisitionNode;
+import org.opennms.netmgt.provision.persist.requisition.*;
 import org.opennms.netmgt.xml.event.Event;
 import org.opennms.netmgt.xml.event.Log;
+import org.opennms.ocs.inventory.client.request.logic.OcsInventoryClientLogic;
+import org.opennms.ocs.inventory.client.request.logic.OcsInventoryClientLogicImp;
+import org.opennms.ocs.inventory.client.response.Computer;
+import org.opennms.ocs.inventory.client.response.Computers;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.soap.SOAPException;
+
 /**
  * <p>DefaultNodeProvisionService class.</p>
  *
  * @author ranger
- * @version $Id: $
+ * @version $Id : $
  */
 public class DefaultNodeProvisionService implements NodeProvisionService, InitializingBean {
 
@@ -173,11 +173,34 @@ public class DefaultNodeProvisionService implements NodeProvisionService, Initia
         log().warn("about to return (" + System.currentTimeMillis() + ")");
         return true;
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean importProvisionNode(String host, String login, String password) {
+        log().info(String.format(" Import nodes from OCS Inventory host =%s, login= %s", host, login));
+
+        OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventoryClientLogicImp();
+        try {
+            ocsInventoryClientLogic.init(host, login, password);
+            Computers comp = ocsInventoryClientLogic.getComputers();
+
+            for (Computer cmp : comp.getComputer()) {
+                log().info("SManufacturer: " + cmp.getBios().getSManufacturer());//after in this place will be debug
+
+            }
+        } catch (Exception e) {
+            log().error(String.format("Error couse: %s; error message: %s",e.getCause(), e.getMessage()));
+        }
+
+        return true;
+    }
+
     /**
      * <p>setForeignSourceRepository</p>
      *
-     * @param repository a {@link org.opennms.netmgt.provision.persist.ForeignSourceRepository} object.
+     * @param repository a
+     * object.
      */
     public void setForeignSourceRepository(ForeignSourceRepository repository) {
         m_foreignSourceRepository = repository;
@@ -186,8 +209,9 @@ public class DefaultNodeProvisionService implements NodeProvisionService, Initia
     /**
      * <p>setEventProxy</p>
      *
-     * @param proxy a {@link org.opennms.netmgt.model.events.EventProxy} object.
-     * @throws java.lang.Exception if any.
+     * @param proxy a
+     * object.
+     * @throws Exception if any.
      */
     public void setEventProxy(final EventProxy proxy) throws Exception {
         EventForwarder proxyForwarder = new EventForwarder() {
@@ -216,7 +240,7 @@ public class DefaultNodeProvisionService implements NodeProvisionService, Initia
     /**
      * <p>log</p>
      *
-     * @return a {@link org.opennms.core.utils.ThreadCategory} object.
+     * @return a  object.
      */
     protected ThreadCategory log() {
         return ThreadCategory.getInstance(getClass());
