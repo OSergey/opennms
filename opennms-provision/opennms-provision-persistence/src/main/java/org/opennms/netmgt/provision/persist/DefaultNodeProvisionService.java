@@ -53,7 +53,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.soap.SOAPException;
 
 /**
  * <p>DefaultNodeProvisionService class.</p>
@@ -92,7 +91,6 @@ public class DefaultNodeProvisionService implements NodeProvisionService, Initia
     
     /** {@inheritDoc} */
     @Transactional
-    @Override
     public boolean provisionNode(final String user, String foreignSource, String foreignId, String nodeLabel, String ipAddress,
             String[] categories, String snmpCommunity, String snmpVersion,
             String deviceUsername, String devicePassword, String enablePassword,
@@ -177,6 +175,8 @@ public class DefaultNodeProvisionService implements NodeProvisionService, Initia
     /**
      * {@inheritDoc}
      */
+    @Transactional
+    @Override
     public boolean importProvisionNode(String host, String login, String password) {
         log().info(String.format(" Import nodes from OCS Inventory host =%s, login= %s", host, login));
 

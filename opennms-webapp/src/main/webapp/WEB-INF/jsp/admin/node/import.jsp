@@ -72,7 +72,7 @@
 		categoryMembershipTable.appendChild(newCategoryRow);
 	}
 	</script>
-	<input type="hidden" name="actionCode" value="add" />
+	<input type="hidden" name="actionCode" value="import" />
 	<h3>Basic Attributes (required)</h3>
 	<div class="boxWrapper">
 		<table class="normal">
@@ -86,18 +86,28 @@
 					</select>
 				</td>
 			</tr>
-			<tr>
-				<td>IP Address:</td>
-				<td><input type="text" name="ipAddress" /></td>
-
-				<td>Node Label:</td>
-				<td><input type="text" name="nodeLabel" /></td>
-			</tr>
 		</table>
 	</div>
+ 	<h3>Setting for connection to OCS Inventory server</h3>
+    <div class="boxWrapper">
+        <table class="normal">
+            <tr>
+                <td><label for="host">Host:</label></td>
+                <td><input id="host" type="text" name="host" /></td>
+            </tr>
+            <tr>
+                <td><label for="login">Login:</label></td>
+                <td><input id="login" type="text" name="host" /></td>
+            </tr>
+            <tr>
+                <td><label for="password">Password:</label></td>
+                <td><input id="password" type="password" name="host" /></td>
+            </tr>
+        </table>
+    </div>
 
-	<h3>Surveillance Category Memberships (optional)</h3>
-	<div class="boxWrapper">
+    <h3>Configuration import nodes into category </h3>
+    <div class="boxWrapper">
 		<table class="normal">
 		<tbody id="categoryMembershipTable">
 			<tr id="initialCategoryRow">
@@ -122,6 +132,9 @@
 				</td>
 				<td><a href="javascript:addCategoryRow()">More...</a></td>
 			</tr>
+        <tr><td>Match String:</td>
+        <td><input id="matchStr" type="text" name="matchStr" /></td>
+        </tr>
 		</tbody>
 		</table>
 	</div>
@@ -130,53 +143,11 @@
 	<div class="boxWrapper">
 		<table class="normal">
 			<tr>
-				<td>Community String:</td>
-				<td><input type="text" name="community" /></td>
-
-				<td>Version</td>
-				<td><select name="snmpVersion"><option>v1</option><option selected>v2c</option></select></td>
-
-				<td colspan="2">&nbsp;</td>
-			</tr>
-			<tr>
 			    <td><label for="noSNMP">No SNMP:</label></td>
 			    <td><input id="noSNMP" type="checkbox" name="noSNMP" value="true" selected="false" /></td>
 			</tr>
 		</table>
 	</div>
-
-	<h3>CLI Authentication Parameters (optional)</h3>
-	<div class="boxWrapper">
-		<table class="normal">
-			<tr>
-				<td>Device Username:</td>
-				<td colspan="3"><input type="text" name="deviceUsername" /></td>
-			</tr>
-			<tr>
-				<td>Device Password:</td>
-				<td><input type="text" name="devicePassword" /></td>
-				
-				<td>Enable Password:</td>
-				<td><input type="text" name="enablePassword" /></td>
-			</tr>
-			<tr>
-				<td>Access Method:</td>
-				<td>
-					<select name="accessMethod" >
-					<option value="" selected="true">--</option>
-					<option value="rsh">RSH</option>
-					<option value="ssh">SSH</option>
-					<option value="telnet">Telnet</option>
-					</select>  
-				</td>
-				<td><label for="autoEnableControl">Auto Enable:</label></td>
-				<td>
-					<input id="autoEnableControl" type="checkbox" name="autoEnable" selected="false" />
-				</td>
-			</tr>
-		</table>
-	</div>
-
 	<input type="submit" value="Provision" />
 	<input type="reset" />
 </form>

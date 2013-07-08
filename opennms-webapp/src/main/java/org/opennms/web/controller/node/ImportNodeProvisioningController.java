@@ -71,12 +71,12 @@ public class ImportNodeProvisioningController extends AbstractController impleme
         String redirectParms = request.getParameter("redirectParms");
         String redirect      = request.getParameter("redirect");
 
-        if (action == null || !action.equals("add")) {
+        if (action == null || !action.equals("import")) {
             ModelAndView modelAndView = m_nodeProvisionService.getModelAndView(request);
             modelAndView.setViewName(m_successView);
             return modelAndView;
         } else {
-            String[] required = new String[] { "foreignSource", "nodeLabel", "ipAddress" };
+            String[] required = new String[] { "foreignSource", "host", "login", "password" };
 
             for (String key : required) {
                 String[] value = request.getParameterValues(key);
@@ -86,22 +86,10 @@ public class ImportNodeProvisioningController extends AbstractController impleme
             }
 
             String foreignSource  = request.getParameter("foreignSource");
-            if (m_nodeProvisionService.provisionNode(
-                user,
-                foreignSource,
-                String.valueOf(System.currentTimeMillis()),
-                request.getParameter("nodeLabel"),
-                request.getParameter("ipAddress"),
-                request.getParameterValues("category"),
-                request.getParameter("community"),
-                request.getParameter("snmpVersion"),
-                request.getParameter("deviceUsername"),
-                request.getParameter("devicePassword"),
-                request.getParameter("enablePassword"),
-                request.getParameter("accessMethod"),
-                request.getParameter("autoEnable"),
-                request.getParameter("noSNMP")
-                )) {
+            if (m_nodeProvisionService.importProvisionNode(
+                request.getParameter("host"),
+                request.getParameter("login"),
+                request.getParameter("password"))) {
                 redirectParms = "success=true&foreignSource=" + foreignSource;
             }
         }
