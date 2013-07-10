@@ -176,10 +176,9 @@ public class DefaultNodeProvisionService implements NodeProvisionService, Initia
      * {@inheritDoc}
      */
     @Transactional
-    @Override
-    public boolean importProvisionNode(String host, String login, String password) {
+    public boolean importProvisionNodes(String host, String login, String password) {
         log().info(String.format(" Import nodes from OCS Inventory host =%s, login= %s", host, login));
-
+        java.lang.System.setProperty("javax.xml.soap.MessageFactory","com.sun.xml.messaging.saaj.soap.ver1_1.SOAPMessageFactory1_1Impl");
         OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventoryClientLogicImp();
         try {
             ocsInventoryClientLogic.init(host, login, password);
@@ -190,7 +189,7 @@ public class DefaultNodeProvisionService implements NodeProvisionService, Initia
 
             }
         } catch (Exception e) {
-            log().error(String.format("Error couse: %s; error message: %s",e.getCause(), e.getMessage()));
+            log().error(String.format("Error cause: %s; error message: %s stack trace", e.getCause(), e.getMessage(), e.getStackTrace().toString()));
         }
 
         return true;

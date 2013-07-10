@@ -40,7 +40,7 @@
 <jsp:include page="/includes/header.jsp" flush="false" >
 	<jsp:param name="title" value="Requisition Node" />
 	<jsp:param name="headTitle" value="Provisioning Requisitions" />
-	<jsp:param name="headTitle" value="Add Node" />
+	<jsp:param name="headTitle" value="Import Nodes" />
 	<jsp:param name="breadcrumb" value="<a href='admin/index.jsp'>Admin</a>" />
 	<jsp:param name="breadcrumb" value="<a href='admin/provisioningGroups.htm'>Provisioning Requisitions</a>" />
 	<jsp:param name="breadcrumb" value="Import Nodes from OCS Inventory" />
@@ -62,7 +62,7 @@
 	<p>You must first <a href='admin/provisioningGroups.htm'>create and import a requisition</a> before using this page.</p>
 </c:when>
 <c:otherwise>
-<form action="admin/node/add.htm">
+<form action="admin/node/import.htm">
 	<script type="text/javascript">
 	function addCategoryRow() {
 		var categoryMembershipTable = document.getElementById("categoryMembershipTable");
@@ -97,11 +97,11 @@
             </tr>
             <tr>
                 <td><label for="login">Login:</label></td>
-                <td><input id="login" type="text" name="host" /></td>
+                <td><input id="login" type="text" name="login" /></td>
             </tr>
             <tr>
                 <td><label for="password">Password:</label></td>
-                <td><input id="password" type="password" name="host" /></td>
+                <td><input id="password" type="password" name="password" /></td>
             </tr>
         </table>
     </div>
