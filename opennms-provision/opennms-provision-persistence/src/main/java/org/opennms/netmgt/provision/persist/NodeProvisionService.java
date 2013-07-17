@@ -81,5 +81,5 @@ public interface NodeProvisionService {
      * @param password the password
      * @return the boolean
      */
-    public boolean importProvisionNode(String host, String login, String password);
+    public boolean importProvisionNodes(String host, String login, String password, String foreignSource, boolean useIconLink);
 }

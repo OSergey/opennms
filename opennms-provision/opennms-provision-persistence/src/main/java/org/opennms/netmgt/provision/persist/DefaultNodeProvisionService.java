@@ -47,12 +47,16 @@ import org.opennms.ocs.inventory.client.request.logic.OcsInventoryClientLogic;
 import org.opennms.ocs.inventory.client.request.logic.OcsInventoryClientLogicImp;
 import org.opennms.ocs.inventory.client.response.Computer;
 import org.opennms.ocs.inventory.client.response.Computers;
+import org.opennms.ocs.inventory.client.response.Storage;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 
 /**
  * <p>DefaultNodeProvisionService class.</p>
@@ -176,22 +180,119 @@ public class DefaultNodeProvisionService implements NodeProvisionService, Initia
      * {@inheritDoc}
      */
     @Transactional
-    public boolean importProvisionNodes(String host, String login, String password) {
-        log().info(String.format(" Import nodes from OCS Inventory host =%s, login= %s", host, login));
+    public boolean importProvisionNodes(String host, String login, String password, String foreignSource, boolean useIconLink) {
+        log().info(String.format(" Import nodes from OCS Inventory host =%s, login =%s", host, login));
         java.lang.System.setProperty("javax.xml.soap.MessageFactory","com.sun.xml.messaging.saaj.soap.ver1_1.SOAPMessageFactory1_1Impl");
         OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventoryClientLogicImp();
+        Requisition req = m_foreignSourceRepository.getRequisition(foreignSource);
         try {
             ocsInventoryClientLogic.init(host, login, password);
             Computers comp = ocsInventoryClientLogic.getComputers();
-
             for (Computer cmp : comp.getComputer()) {
-                log().info("SManufacturer: " + cmp.getBios().getSManufacturer());//after in this place will be debug
+                log().info("Hardware: " + cmp.getHardware());//after in this place will be debug
+                log().debug("import requisition nodes");
+                RequisitionInterface reqIface = new RequisitionInterface();
+                if(cmp.getHardware() != null && cmp.getHardware().getIpsrc() != null){
+                reqIface.setIpAddr(cmp.getHardware().getIpsrc());
+                }
+                reqIface.setManaged(true);
+                reqIface.setSnmpPrimary(PrimaryType.get("P"));
+                reqIface.setStatus(1);
+                reqIface.putMonitoredService(new RequisitionMonitoredService("ICMP"));
+
+
+                log().debug("set Interface");
+                RequisitionNode reqNode = new RequisitionNode();
+                if(cmp.getHardware().getName() != null){
+                reqNode.setNodeLabel(cmp.getHardware().getName());
+                }
+                reqNode.setForeignId(String.valueOf(cmp.getHardware().getId()));
+                reqNode.putInterface(reqIface);
+                log().debug("map manufacturer");
+                if(cmp.getBios()!= null && cmp.getBios().getSManufacturer() != null) {
+                    reqNode.putAsset(new RequisitionAsset("manufacturer", cmp.getBios().getSManufacturer()));
+                }
+
+                log().debug("map modelNumber");
+                if(cmp.getBios().getSModel() != null){
+                    reqNode.putAsset(new RequisitionAsset("modelNumber", cmp.getBios().getSModel()));
+                }
+
+                log().debug("map serialNumber");
+                reqNode.putAsset(new RequisitionAsset("serialNumber", String.valueOf(cmp.getBios().getSSN())));
+
+                log().debug("map operatingSystem");
+                if(cmp.getHardware().getOsname() != null && cmp.getHardware().getOsversion() != null) {
+                    reqNode.putAsset(new RequisitionAsset("operatingSystem", cmp.getHardware().getOsname() + " " +
+                            cmp.getHardware().getOsversion()));
+                }
+                log().debug("set processors");
+                StringBuilder infProcessors = new StringBuilder();
+                infProcessors.append(String.valueOf(cmp.getHardware().getProcessorn()));
+                infProcessors.append("x ");
+                infProcessors.append(String.valueOf(cmp.getHardware().getProcessort()));
+                infProcessors.append(" ");
+                infProcessors.append(String.valueOf(cmp.getHardware().getProcessors()));
+                reqNode.putAsset(new RequisitionAsset("ram", String.valueOf(cmp.getHardware().getMemory())));
+                reqNode.putAsset(new RequisitionAsset("cpu", infProcessors.toString()));
+
+                String url  = "http://" + host + "/ocsreports/index.php?function=computer&head=1";
+                String info = useIconLink?"<img src=\"/opennms/images/ocsinventory.png\"/>":"OCS Link";
+                StringBuilder comment = new StringBuilder();
+                comment.append(cmp.getHardware().getUseragent());
+                comment.append("- <a href=");
+                comment.append('"'+url);
+                comment.append("&systemid=");
+                comment.append(cmp.getHardware().getId()+'"');
+                comment.append("target=\"_blank\">");
+                comment.append(info);
+                comment.append("</a>");
+                reqNode.putAsset(new RequisitionAsset("comment", comment.toString()));
+
+                if(cmp.getHardware().getOscomments() != null){
+                    reqNode.putAsset(new RequisitionAsset("description", cmp.getHardware().getOscomments()));
+                }
+
+                if(cmp.getHardware().getUserId() != null){
+                    reqNode.putAsset(new RequisitionAsset("username", cmp.getHardware().getUserId()));
+                }
+                int count = 0;
+                log().debug("set storages");
+                for(Storage storage :cmp.getStorages()){
+                    StringBuilder disk = new StringBuilder();
+                    disk.append(storage.getDisksize()/1024);
+                    disk.append(" MB, ");
+                    if(storage.getName() != null){
+                        disk.append(storage.getName());
+                    } else {
+                        disk.append(storage.getModel());
+                    }
+                    reqNode.putAsset(new RequisitionAsset("hdd"+String.valueOf(count), disk.toString()));
+
+                    count++;
+                }
+                    req.putNode(reqNode);
+                    log().debug("saving requisition node");
+                    m_foreignSourceRepository.save(req);
 
             }
         } catch (Exception e) {
-            log().error(String.format("Error cause: %s; error message: %s stack trace", e.getCause(), e.getMessage(), e.getStackTrace().toString()));
+            Writer writer = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(writer);
+            e.printStackTrace(printWriter);
+            log().error(String.format("Error cause: %s; error message: %s stack trace: %s", e.getCause(), e.getMessage(), writer.toString()));
         }
-
+        try {
+                log().debug("saving requisition node");
+                m_foreignSourceRepository.save(req);
+        } catch (ForeignSourceRepositoryException e) {
+            throw new RuntimeException("unable to retrieve foreign source '" + foreignSource + "'", e);
+        }
+        Event e = new EventBuilder(EventConstants.RELOAD_IMPORT_UEI, "NodeProvisionService")
+                .addParam("url", m_foreignSourceRepository.getRequisitionURL(foreignSource).toString())
+                .getEvent();
+        m_eventForwarder.sendNow(e);
+        log().warn("about to return (" + System.currentTimeMillis() + ")");
         return true;
     }
 

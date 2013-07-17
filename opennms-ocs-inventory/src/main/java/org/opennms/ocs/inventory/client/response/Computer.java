@@ -250,16 +250,16 @@ public class Computer {
     @XmlElement(name = "DICO_SOFT", required = true)
     protected String _dicosoft;
 
-    @XmlElement(name = "Drives", required = true)
+    @XmlElement(name = "DRIVES", required = true)
     protected List<Drives> _drives;
 
-    @XmlElement(name = "Hardware", required = true)
+    @XmlElement(name = "HARDWARE", required = true)
     protected Hardware _hardware;
 
-    @XmlElement(name = "Networks", required = true)
+    @XmlElement(name = "NETWORKS", required = true)
     protected Network _networks;
 
-    @XmlElement(name = "Software", required = true)
+    @XmlElement(name = "SOFTWARE", required = true)
     protected List<Software> _softwares;
 
     @XmlElement(name = "SOUNDS", required = true)

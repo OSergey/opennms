@@ -28,7 +28,7 @@ public class TestOCSInventoryClient {
             
             assertNotNull(comp);
             for (Computer cmp: comp.getComputer()){
-                System.out.println("SManufacturer: "+ cmp.getBios().getSManufacturer());
+                System.out.println("hardware: "+ cmp.getHardware().getIpsrc());
             }
 
         } catch (Exception e) {
