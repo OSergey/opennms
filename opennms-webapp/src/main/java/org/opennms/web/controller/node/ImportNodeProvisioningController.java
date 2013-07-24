@@ -86,12 +86,12 @@ public class ImportNodeProvisioningController extends AbstractController impleme
             }
 
             String foreignSource  = request.getParameter("foreignSource");
-            if (m_nodeProvisionService.importProvisionNodes(
+           /* if (m_nodeProvisionService.importProvisionNodes(
                 request.getParameter("host"),
                 request.getParameter("login"),
                 request.getParameter("password"), foreignSource, true)) {
                 redirectParms = "success=true&foreignSource=" + foreignSource;
-            }
+            }*/
         }
 
         String viewName;

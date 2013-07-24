@@ -251,7 +251,7 @@ public class Computer {
     protected String _dicosoft;
 
     @XmlElement(name = "DRIVES", required = true)
-    protected List<Drives> _drives;
+    protected List<Drive> _drives;
 
     @XmlElement(name = "HARDWARE", required = true)
     protected Hardware _hardware;
@@ -259,7 +259,7 @@ public class Computer {
     @XmlElement(name = "NETWORKS", required = true)
     protected Network _networks;
 
-    @XmlElement(name = "SOFTWARE", required = true)
+    @XmlElement(name = "SOFTWARES", required = true)
     protected List<Software> _softwares;
 
     @XmlElement(name = "SOUNDS", required = true)
@@ -274,7 +274,7 @@ public class Computer {
     /**
      * Gets the value of the m_accountInfo property.
      * 
-     * @return possible object is {@link Computers.Computer.AccountInfo }
+     * @return possible _accountInfo
      */
     public AccountInfo getAccountInfo() {
         return _accountInfo;
@@ -284,16 +284,17 @@ public class Computer {
      * Sets the value of the m_accountInfo property.
      * 
      * @param value
-     *            allowed object is {@link Computers.Computer.AccountInfo }
+     *
      */
     public void setAccountInfo(AccountInfo value) {
         this._accountInfo = value;
     }
 
+
     /**
-     * Gets the value of the bios property.
-     * 
-     * @return possible object is {@link Computers.Computer.Bios }
+     * Gets bios.
+     *
+     * @return the bios
      */
     public Bios getBios() {
         return _bios;
@@ -301,9 +302,9 @@ public class Computer {
 
     /**
      * Sets the value of the bios property.
-     * 
-     * @param value
-     *            allowed object is {@link Computers.Computer.Bios }
+     *
+     *
+     * @param value the value
      */
     public void setBios(Bios value) {
         this._bios = value;
@@ -324,7 +325,7 @@ public class Computer {
      * </pre>
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Computers.Computer.Controller }
+     *
      */
     public List<Controller> getControllers() {
         if (_controllers == null) {
@@ -367,11 +368,11 @@ public class Computer {
      * </pre>
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Computers.Computer.Drives }
+     *
      */
-    public List<Drives> getDrives() {
+    public List<Drive> getDrives() {
         if (_drives == null) {
-            _drives = new ArrayList<Drives>();
+            _drives = new ArrayList<Drive>();
         }
         return this._drives;
     }
@@ -379,7 +380,7 @@ public class Computer {
     /**
      * Gets the value of the _hardware property.
      * 
-     * @return possible object is {@link Computers.Computer.Hardware }
+     * @return hardware
      */
     public Hardware getHardware() {
         return _hardware;
@@ -387,9 +388,7 @@ public class Computer {
 
     /**
      * Sets the value of the _hardware property.
-     * 
-     * @param value
-     *            allowed object is {@link Computers.Computer.Hardware }
+     * @param value the value
      */
     public void setHardware(Hardware value) {
         this._hardware = value;
@@ -397,8 +396,9 @@ public class Computer {
 
     /**
      * Gets the value of the _networks property.
-     * 
-     * @return possible object is {@link Computers.Computer.Network }
+     *
+     *
+     * @return the networks
      */
     public Network getNetworks() {
         return _networks;
@@ -406,9 +406,8 @@ public class Computer {
 
     /**
      * Sets the value of the _networks property.
-     * 
-     * @param value
-     *            allowed object is {@link Computers.Computer.Network }
+     *
+     * @param value the value
      */
     public void setNetworks(Network value) {
         this._networks = value;
@@ -429,9 +428,9 @@ public class Computer {
      * </pre>
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Computers.Computer.Software }
+     *
      */
-    public List<Software> getSoftware() {
+    public List<Software> getSoftwares() {
         if (_softwares == null) {
             _softwares = new ArrayList<Software>();
         }
@@ -453,7 +452,7 @@ public class Computer {
      * </pre>
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Computers.Computer.SOUNDS }
+     *
      */
     public List<Sound> getSounds() {
         if (_sounds == null) {
@@ -464,8 +463,9 @@ public class Computer {
 
     /**
      * Gets the value of the _storages property.
-     * 
-     * @return possible object is {@link Computers.Computer.STORAGES }
+     *
+     *
+     * @return the storages
      */
     public List<Storage> getStorages() {
         return _storages;
@@ -473,9 +473,8 @@ public class Computer {
 
     /**
      * Sets the value of the _storages property.
-     * 
-     * @param value
-     *            allowed object is {@link Computers.Computer.STORAGES }
+     *
+     * @param value the value
      */
     public void setStorages(List<Storage> value) {
         this._storages = value;

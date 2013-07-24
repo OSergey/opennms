@@ -42,7 +42,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = { "_createDate", "_filesystem", "_free",
         "_letter", "_numfiles", "_total", "_type", "_volumn" })
-public class Drives {
+public class Drive {
 
     @XmlElement(name = "CREATEDATE", required = true)
     protected String _createDate;

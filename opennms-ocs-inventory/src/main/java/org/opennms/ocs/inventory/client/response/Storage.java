@@ -74,7 +74,7 @@ public class Storage {
      * 
      * @return possible object is {@link String }
      */
-    public String getDESCRIPTION() {
+    public String getDescription() {
         return _description;
     }
 
@@ -178,7 +178,7 @@ public class Storage {
      * 
      * @return possible object is {@link String }
      */
-    public String getSERIALNUMBER() {
+    public String getSerialNumber() {
         return _serialnumber;
     }
 
@@ -188,7 +188,7 @@ public class Storage {
      * @param value
      *            allowed object is {@link String }
      */
-    public void setSERIALNUMBER(String value) {
+    public void setSerialNumber(String value) {
         this._serialnumber = value;
     }
 
@@ -197,7 +197,7 @@ public class Storage {
      * 
      * @return possible object is {@link String }
      */
-    public String getTYPE() {
+    public String getType() {
         return _type;
     }
 
@@ -207,7 +207,7 @@ public class Storage {
      * @param value
      *            allowed object is {@link String }
      */
-    public void setTYPE(String value) {
+    public void setType(String value) {
         this._type = value;
     }
 

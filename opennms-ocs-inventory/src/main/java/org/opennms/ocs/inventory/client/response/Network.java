@@ -89,7 +89,7 @@ public class Network {
      * 
      * @return possible object is {@link String }
      */
-    public String getDESCRIPTION() {
+    public String getDescription() {
         return description;
     }
 
@@ -99,7 +99,7 @@ public class Network {
      * @param value
      *            allowed object is {@link String }
      */
-    public void setDESCRIPTION(String value) {
+    public void setDescription(String value) {
         this.description = value;
     }
 
@@ -108,7 +108,7 @@ public class Network {
      * 
      * @return possible object is {@link String }
      */
-    public String getIPADDRESS() {
+    public String getIPAddress() {
         return ipaddress;
     }
 
@@ -118,7 +118,7 @@ public class Network {
      * @param value
      *            allowed object is {@link String }
      */
-    public void setIPADDRESS(String value) {
+    public void setIPAddress(String value) {
         this.ipaddress = value;
     }
 
@@ -146,7 +146,7 @@ public class Network {
      * 
      * @return possible object is {@link String }
      */
-    public String getIPGATEWAY() {
+    public String getIPGateway() {
         return ipgateway;
     }
 
@@ -156,7 +156,7 @@ public class Network {
      * @param value
      *            allowed object is {@link String }
      */
-    public void setIPGATEWAY(String value) {
+    public void setIPGateway(String value) {
         this.ipgateway = value;
     }
 
@@ -165,7 +165,7 @@ public class Network {
      * 
      * @return possible object is {@link String }
      */
-    public String getIPMASK() {
+    public String getIPMask() {
         return ipmask;
     }
 
@@ -175,7 +175,7 @@ public class Network {
      * @param value
      *            allowed object is {@link String }
      */
-    public void setIPMASK(String value) {
+    public void setIPMask(String value) {
         this.ipmask = value;
     }
 
@@ -184,7 +184,7 @@ public class Network {
      * 
      * @return possible object is {@link String }
      */
-    public String getIPSUBNET() {
+    public String getIPSubnet() {
         return ipsubnet;
     }
 
@@ -194,7 +194,7 @@ public class Network {
      * @param value
      *            allowed object is {@link String }
      */
-    public void setIPSUBNET(String value) {
+    public void setIPSubnet(String value) {
         this.ipsubnet = value;
     }
 
@@ -222,7 +222,7 @@ public class Network {
      * 
      * @return possible object is {@link String }
      */
-    public String getSPEED() {
+    public String getSpeed() {
         return speed;
     }
 
@@ -232,7 +232,7 @@ public class Network {
      * @param value
      *            allowed object is {@link String }
      */
-    public void setSPEED(String value) {
+    public void setSpeed(String value) {
         this.speed = value;
     }
 
@@ -241,7 +241,7 @@ public class Network {
      * 
      * @return possible object is {@link String }
      */
-    public String getSTATUS() {
+    public String getStatus() {
         return status;
     }
 
@@ -251,7 +251,7 @@ public class Network {
      * @param value
      *            allowed object is {@link String }
      */
-    public void setSTATUS(String value) {
+    public void setStatus(String value) {
         this.status = value;
     }
 
@@ -260,7 +260,7 @@ public class Network {
      * 
      * @return possible object is {@link String }
      */
-    public String getTYPE() {
+    public String getType() {
         return type;
     }
 
@@ -270,7 +270,7 @@ public class Network {
      * @param value
      *            allowed object is {@link String }
      */
-    public void setTYPE(String value) {
+    public void setType(String value) {
         this.type = value;
     }
 
@@ -279,7 +279,7 @@ public class Network {
      * 
      * @return possible object is {@link String }
      */
-    public String getTYPEMIB() {
+    public String getTypeMib() {
         return typemib;
     }
 
@@ -289,21 +289,21 @@ public class Network {
      * @param value
      *            allowed object is {@link String }
      */
-    public void setTYPEMIB(String value) {
+    public void setTypeMib(String value) {
         this.typemib = value;
     }
 
     /**
      * Gets the value of the virtualdev property.
      */
-    public int getVIRTUALDEV() {
+    public int getVirtualDEV() {
         return virtualdev;
     }
 
     /**
      * Sets the value of the virtualdev property.
      */
-    public void setVIRTUALDEV(int value) {
+    public void setVirtualDEV(int value) {
         this.virtualdev = value;
     }
 

@@ -28,9 +28,12 @@
 
 package org.opennms.netmgt.provision.persist;
 
-import javax.servlet.http.HttpServletRequest;
-
+import org.opennms.netmgt.provision.persist.requisition.Requisition;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>NodeProvisionService interface.</p>
@@ -81,5 +84,6 @@ public interface NodeProvisionService {
      * @param password the password
      * @return the boolean
      */
-    public boolean importProvisionNodes(String host, String login, String password, String foreignSource, boolean useIconLink);
+    public Requisition importProvisionNodes(Requisition req, String host, String login, String password, String foreignSource,
+                                        boolean useIconLink,Map<String, List<String>> namesCategCriteriaMap, List<String> typeCateg);
 }

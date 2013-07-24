@@ -250,12 +250,12 @@ import javax.xml.bind.annotation.XmlType;
  * @author <A HREF="mailto:sergey.ovsyuk@gmail.com">Sergey Ovsyuk </A>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "_computer" })
+@XmlType(name = "", propOrder = { "_computers" })
 @XmlRootElement(name = "COMPUTERS")
 public class Computers {
 
     @XmlElement(name = "COMPUTER", required = true)
-    protected List<Computer> _computer;
+    protected List<Computer> _computers;
 
     /**
      * Gets the value of the m_computer property.
@@ -272,12 +272,12 @@ public class Computers {
      * </pre>
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Computers.Computer }
+     *
      */
-    public List<Computer> getComputer() {
-        if (_computer == null) {
-            _computer = new ArrayList<Computer>();
+    public List<Computer> getComputers() {
+        if (_computers == null) {
+            _computers = new ArrayList<Computer>();
         }
-        return this._computer;
+        return this._computers;
     }
 }
