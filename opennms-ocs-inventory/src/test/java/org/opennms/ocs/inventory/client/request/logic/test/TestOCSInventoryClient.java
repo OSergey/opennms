@@ -27,7 +27,7 @@ public class TestOCSInventoryClient {
             Computers comp = ocsInventoryClientLogic.getComputers();
             
             assertNotNull(comp);
-            for (Computer cmp: comp.getComputer()){
+            for (Computer cmp: comp.getComputers()){
                 System.out.println("hardware: "+ cmp.getHardware().getIpsrc());
             }
 
