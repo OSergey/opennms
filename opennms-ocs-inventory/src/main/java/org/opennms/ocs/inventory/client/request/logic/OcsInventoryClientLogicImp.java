@@ -23,17 +23,17 @@ import javax.xml.soap.SOAPMessage;
 import javax.xml.soap.SOAPPart;
 
 import org.apache.commons.codec.binary.Base64;
+import org.opennms.core.utils.ThreadCategory;
 import org.opennms.ocs.inventory.client.request.Engine;
 import org.opennms.ocs.inventory.client.request.Request;
 import org.opennms.ocs.inventory.client.request.RequestFactory;
 import org.opennms.ocs.inventory.client.response.Computers;
 
 
-
 /**
  * The Class OcsInventoryClientLogicImp.
- * 
- * @author <A HREF="mailto:sergey.ovsyuk@gmail.com">Sergey Ovsyuk </A>
+ *
+ * @author  <A HREF="mailto:sergey.ovsyuk@gmail.com">Sergey Ovsyuk </A>
  */
 public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
 
@@ -72,7 +72,8 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
      */
     public void init(String host, String login, String password)
             throws SOAPException {
-        
+        log().info("Initialization OCS Inventory Client");
+        log().info("Init parameters: host="+ host + ", login="+login);
         m_login = login;
         m_password = password;
         
@@ -92,9 +93,10 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
      * #getComputers()
      */
     public Computers getComputers() throws SOAPException, Exception {
+        log().info("Prepare call webservice from OCS server");
         SOAPMessage soapResponse = soapConnection.call(createSOAPRequest(),
                                                        m_url);
-
+        log().info("Webservice are already called from OCS server, parse response");
         SOAPBody spBody = soapResponse.getSOAPBody();
         SOAPElement soapElement = (SOAPElement) spBody.getChildElements().next();
         String content = "";
@@ -111,6 +113,8 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
         Unmarshaller jaxbMarshaller = jaxbContext.createUnmarshaller();
         InputStream is = new ByteArrayInputStream(content.getBytes());
         Computers comp = (Computers) jaxbMarshaller.unmarshal(is);
+        log().debug("Computers = " + comp.toString());
+        log().info("OCS Inventory Client success work finished");
         return comp;
     }
 
@@ -122,10 +126,12 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
      *             the exception
      */
     private static SOAPMessage createSOAPRequest() throws Exception {
+        log().info("Create SOAP request");
         MessageFactory messageFactory = MessageFactory.newInstance();
         SOAPMessage soapMessage = messageFactory.createMessage();
         SOAPPart soapPart = soapMessage.getSOAPPart();
 
+        log().debug("Create SOAP envelope");
         // SOAP Envelope
         SOAPEnvelope envelope = soapPart.getEnvelope();
         SOAPHeader header = envelope.getHeader();
@@ -142,6 +148,7 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
         MimeHeaders hd = soapMessage.getMimeHeaders();
         String authorization = com.sun.org.apache.xml.internal.security.utils.Base64.encode((m_login + ":" + m_password).getBytes());
         hd.addHeader("Authorization", "Basic " + authorization);
+        log().debug("Create SOAP body");
 
         // SOAP Body
         RequestFactory objFact = new RequestFactory();
@@ -166,8 +173,12 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
         soapBodyElem1.setTextContent(writer.toString());
 
         soapMessage.saveChanges();
-
+        log().info("SOAP request created");
         return soapMessage;
+    }
+
+    private static ThreadCategory log() {
+        return ThreadCategory.getInstance(OcsInventoryClientLogicImp.class);
     }
 
 }

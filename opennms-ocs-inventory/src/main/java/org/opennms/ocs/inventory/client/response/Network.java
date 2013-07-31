@@ -307,4 +307,21 @@ public class Network {
         this.virtualdev = value;
     }
 
+    @Override
+    public String toString() {
+        return "Network{" +
+                "description='" + description + '\'' +
+                ", ipaddress='" + ipaddress + '\'' +
+                ", ipdhcp='" + ipdhcp + '\'' +
+                ", ipgateway='" + ipgateway + '\'' +
+                ", ipmask='" + ipmask + '\'' +
+                ", ipsubnet='" + ipsubnet + '\'' +
+                ", macaddr='" + macaddr + '\'' +
+                ", speed='" + speed + '\'' +
+                ", status='" + status + '\'' +
+                ", type='" + type + '\'' +
+                ", typemib='" + typemib + '\'' +
+                ", virtualdev=" + virtualdev +
+                '}';
+    }
 }

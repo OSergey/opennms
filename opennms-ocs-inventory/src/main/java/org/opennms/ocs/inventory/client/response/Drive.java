@@ -205,4 +205,17 @@ public class Drive {
         this._volumn = value;
     }
 
+    @Override
+    public String toString() {
+        return "Drive{" +
+                "_createDate='" + _createDate + '\'' +
+                ", _filesystem='" + _filesystem + '\'' +
+                ", _free=" + _free +
+                ", _letter='" + _letter + '\'' +
+                ", _numfiles=" + _numfiles +
+                ", _total=" + _total +
+                ", _type='" + _type + '\'' +
+                ", _volumn='" + _volumn + '\'' +
+                '}';
+    }
 }

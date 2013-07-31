@@ -692,5 +692,40 @@ public class Hardware {
         this._workGroup = value;
     }
 
+    @Override
+    public String toString() {
+        return "Hardware{" +
+                "_checksum=" + _checksum +
+                ", _defaultGateway='" + _defaultGateway + '\'' +
+                ", _description='" + _description + '\'' +
+                ", _dns='" + _dns + '\'' +
+                ", _fidelity=" + _fidelity +
+                ", _id=" + _id +
+                ", _ipaddr='" + _ipaddr + '\'' +
+                ", _ipsrc='" + _ipsrc + '\'' +
+                ", _lastcome=" + _lastcome +
+                ", _lastdate=" + _lastdate +
+                ", _memory=" + _memory +
+                ", _name='" + _name + '\'' +
+                ", _oscomments='" + _oscomments + '\'' +
+                ", _osname='" + _osname + '\'' +
+                ", _osversion='" + _osversion + '\'' +
+                ", _processorn=" + _processorn +
+                ", _processors=" + _processors +
+                ", _processort='" + _processort + '\'' +
+                ", _quality=" + _quality +
+                ", _sstate=" + _sstate +
+                ", _swap=" + _swap +
+                ", _type=" + _type +
+                ", _useragent='" + _useragent + '\'' +
+                ", _userdomain='" + _userdomain + '\'' +
+                ", _userid='" + _userid + '\'' +
+                ", _wincompany='" + _wincompany + '\'' +
+                ", _winowner='" + _winowner + '\'' +
+                ", _winprodId='" + _winprodId + '\'' +
+                ", _winProdKey='" + _winProdKey + '\'' +
+                ", _workGroup='" + _workGroup + '\'' +
+                '}';
+    }
 }
 

@@ -216,4 +216,17 @@ public class Bios {
         this._type = value;
     }
 
+    @Override
+    public String toString() {
+        return "Bios{" +
+                "_assetTag='" + _assetTag + '\'' +
+                ", _bDate=" + _bDate +
+                ", _bManufacturer='" + _bManufacturer + '\'' +
+                ", _bVersion='" + _bVersion + '\'' +
+                ", _sManufacturer='" + _sManufacturer + '\'' +
+                ", _sModel='" + _sModel + '\'' +
+                ", _ssn=" + _ssn +
+                ", _type='" + _type + '\'' +
+                '}';
+    }
 }

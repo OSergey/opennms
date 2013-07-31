@@ -104,4 +104,12 @@ public class Sound {
         this._name = value;
     }
 
+    @Override
+    public String toString() {
+        return "Sound{" +
+                "_description='" + _description + '\'' +
+                ", _manufacturer='" + _manufacturer + '\'' +
+                ", _name='" + _name + '\'' +
+                '}';
+    }
 }

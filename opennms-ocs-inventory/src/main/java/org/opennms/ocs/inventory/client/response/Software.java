@@ -297,4 +297,21 @@ public class Software {
         this._version = value;
     }
 
+    @Override
+    public String toString() {
+        return "Software{" +
+                "_bitswidth=" + _bitswidth +
+                ", _comments='" + _comments + '\'' +
+                ", _filename='" + _filename + '\'' +
+                ", _filesize=" + _filesize +
+                ", _folder='" + _folder + '\'' +
+                ", _guid='" + _guid + '\'' +
+                ", _installdate='" + _installdate + '\'' +
+                ", _language='" + _language + '\'' +
+                ", _name='" + _name + '\'' +
+                ", _publisher='" + _publisher + '\'' +
+                ", _source=" + _source +
+                ", _version='" + _version + '\'' +
+                '}';
+    }
 }

@@ -211,4 +211,17 @@ public class Storage {
         this._type = value;
     }
 
+    @Override
+    public String toString() {
+        return "Storage{" +
+                "_description='" + _description + '\'' +
+                ", _disksize=" + _disksize +
+                ", _firmware=" + _firmware +
+                ", _manufacturer='" + _manufacturer + '\'' +
+                ", _model='" + _model + '\'' +
+                ", _name='" + _name + '\'' +
+                ", _serialnumber='" + _serialnumber + '\'' +
+                ", _type='" + _type + '\'' +
+                '}';
+    }
 }

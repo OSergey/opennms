@@ -54,6 +54,12 @@ public class Entry {
         this.name = value;
     }
 
+    @Override
+    public String toString() {
+        return "Entry{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
 
 

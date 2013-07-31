@@ -127,5 +127,14 @@ public class Video {
         this._resolution = value;
     }
 
+    @Override
+    public String toString() {
+        return "Video{" +
+                "_chipset='" + _chipset + '\'' +
+                ", _memory='" + _memory + '\'' +
+                ", _name='" + _name + '\'' +
+                ", _resolution='" + _resolution + '\'' +
+                '}';
+    }
 }
 

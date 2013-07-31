@@ -280,4 +280,11 @@ public class Computers {
         }
         return this._computers;
     }
+
+    @Override
+    public String toString() {
+        return "Computers{" +
+                "_computers=" + _computers +
+                '}';
+    }
 }

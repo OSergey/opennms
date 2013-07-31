@@ -488,4 +488,21 @@ public class Computer {
     public List<Video> getVideos() {
         return _videos;
     }
+
+    @Override
+    public String toString() {
+        return "Computer{" +
+                "_accountInfo=" + _accountInfo +
+                ", _bios=" + _bios +
+                ", _controllers=" + _controllers +
+                ", _dicosoft='" + _dicosoft + '\'' +
+                ", _drives=" + _drives +
+                ", _hardware=" + _hardware +
+                ", _networks=" + _networks +
+                ", _softwares=" + _softwares +
+                ", _sounds=" + _sounds +
+                ", _storages=" + _storages +
+                ", _videos=" + _videos +
+                '}';
+    }
 }

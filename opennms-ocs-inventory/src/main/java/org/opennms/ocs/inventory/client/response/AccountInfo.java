@@ -65,5 +65,12 @@ public class AccountInfo {
     public void setEntry(Entry value) {
         this._entry = value;
     }
+
+    @Override
+    public String toString() {
+        return "AccountInfo{" +
+                "_entry=" + _entry +
+                '}';
+    }
 }
 
