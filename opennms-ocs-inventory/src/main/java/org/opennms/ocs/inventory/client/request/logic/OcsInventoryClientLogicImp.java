@@ -93,10 +93,10 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
      * #getComputers()
      */
     public Computers getComputers() throws SOAPException, Exception {
-        log().info("Prepare call webservice from OCS server");
+        log().info("Prepare call web service from OCS server");
         SOAPMessage soapResponse = soapConnection.call(createSOAPRequest(),
                                                        m_url);
-        log().info("Webservice are already called from OCS server, parse response");
+        log().info("Web service are already called from OCS server, parse response");
         SOAPBody spBody = soapResponse.getSOAPBody();
         SOAPElement soapElement = (SOAPElement) spBody.getChildElements().next();
         String content = "";
