@@ -47,8 +47,8 @@ public class OcsInventoryRequisitionURLHandlerTest {
 
     @Test
     public void testRequisitionImport() throws IOException {
-//    	URL ocsURL = new URL("ocsinv://dev:dev@192.168.56.101/foreignSource1");
-    	URL ocsURL = new URL("ocsinv://demo:demo@demo.ocsinventory-ng.org/foreignSource1");
+    	URL ocsURL = new URL("ocsinv://dev:dev@192.168.56.101/foreignSource1");
+//    	URL ocsURL = new URL("ocsinv://demo:demo@demo.ocsinventory-ng.org/foreignSource1");
     	InputStream ocsInput = ocsURL.openStream();
     	System.out.println(ocsInput.toString());
     	ocsInput.close();
