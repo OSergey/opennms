@@ -28,12 +28,9 @@
 
 package org.opennms.netmgt.provision.persist;
 
-import org.opennms.netmgt.provision.persist.requisition.Requisition;
-import org.springframework.web.servlet.ModelAndView;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Map;
+
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * <p>NodeProvisionService interface.</p>
@@ -76,14 +73,4 @@ public interface NodeProvisionService {
             String deviceUsername, String devicePassword, String enablePassword,
             String accessMethd, String autoEnable, String noSNMP) throws Exception;
 
-    /**
-     * Import provision node.
-     *
-     * @param host the host
-     * @param login the login
-     * @param password the password
-     * @return the boolean
-     */
-    public Requisition importProvisionNodes(Requisition req, String host, String login, String password, String foreignSource,
-                                        boolean useIconLink,Map<String, List<String>> namesCategCriteriaMap, List<String> typeCateg);
 }
