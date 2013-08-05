@@ -1988,6 +1988,11 @@
         <version>${project.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.opennms</groupId>
+        <artifactId>opennms-ocs-inventory</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
         <groupId>org.opennms.dependencies</groupId>
         <artifactId>rancid-dependencies</artifactId>
         <version>${project.version}</version>

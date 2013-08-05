@@ -346,6 +346,11 @@
       <version>${project.version}</version>
       <scope>compile</scope>
     </dependency>
+    <dependency>
+      <groupId>org.opennms</groupId>
+      <artifactId>opennms-ocs-inventory</artifactId>
+      <scope>compile</scope>
+    </dependency>
     <!-- webapp dependencies -->
     <dependency>
       <groupId>log4j</groupId>
