@@ -14,6 +14,7 @@
     <module>opennms-reverse-dns-provisioning-adapter</module>
     <module>opennms-link-provisioning-adapter</module>
     <module>opennms-map-provisioning-adapter</module>
+    <module>opennms-ocs-inventory</module>
     <module>opennms-puppet-provisioning-adapter</module>
     <module>opennms-rancid-provisioning-adapter</module>
     <module>opennms-rws</module>
