@@ -122,7 +122,6 @@
     <module>opennms-webapp</module>
     <module>opennms-wmi</module>
     <module>opennms-asterisk</module>
-    <module>opennms-ocs-inventory</module>
   </modules>
   <build>
   <extensions>
@@ -1049,11 +1048,6 @@
         <groupId>org.opennms</groupId>
         <artifactId>opennms-ackd</artifactId>
         <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>opennms-client-ocs-inventory</groupId>
-        <artifactId>opennms-ocs-inventory</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
       </dependency>
       <dependency>
         <groupId>org.opennms.core</groupId>
