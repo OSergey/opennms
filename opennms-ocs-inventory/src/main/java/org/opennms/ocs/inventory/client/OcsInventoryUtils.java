@@ -1,12 +1,13 @@
 package org.opennms.ocs.inventory.client;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import groovy.lang.GroovyClassLoader;
+import groovy.lang.GroovyObject;
+import groovy.lang.MetaClass;
 import org.opennms.core.utils.ThreadCategory;
 import org.opennms.netmgt.model.PrimaryType;
 import org.opennms.netmgt.provision.persist.SurvCategoryConstants;
@@ -30,6 +31,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 public class OcsInventoryUtils {
 
+
+
     /**
      * {@inheritDoc}
      */
@@ -40,7 +43,7 @@ public class OcsInventoryUtils {
         log().info(String.format(" Import nodes from OCS Inventory host =%s, login =%s", host, login));
         //java.lang.System.setProperty("javax.xml.soap.MessageFactory", "com.sun.xml.messaging.saaj.soap.ver1_1.SOAPMessageFactory1_1Impl");
         OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventoryClientLogicImp();
-        //Requisition req = m_foreignSourceRepository.getRequisition(foreignSource);
+        req = new Requisition(foreignSource);
         try {
             ocsInventoryClientLogic.init(host, login, password);
             Computers comp = ocsInventoryClientLogic.getComputers();
