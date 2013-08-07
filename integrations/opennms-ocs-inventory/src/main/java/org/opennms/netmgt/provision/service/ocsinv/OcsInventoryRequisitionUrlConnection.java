@@ -162,9 +162,8 @@ public class OcsInventoryRequisitionUrlConnection extends GenericURLConnection {
      * @return the requisition object
      */
     private Requisition buildOCSRequisition() {
-    	Map<String, List<String>> namesCategCriteriaMap = new HashMap<String, List<String>>();
-    	List<String> typeCateg = new ArrayList<String>();
-    	m_requisition = OcsInventoryUtils.importProvisionNodes(m_requisition, m_hostname, m_username, m_password, m_foreignSource, namesCategCriteriaMap, typeCateg);
+        String bodyClass = "";
+    	m_requisition = OcsInventoryUtils.importProvisionNodes(m_requisition, m_hostname, m_username, m_password, m_foreignSource, bodyClass);
 
         return m_requisition;
     }

@@ -38,20 +38,21 @@ public class OcsInventoryUtils {
      */
     @Transactional
     public static Requisition importProvisionNodes(Requisition req, String host, String login, String password, String foreignSource,
-                                        Map<String, List<String>> namesCategCriteriaMap,
-                                        List<String> typeCateg) {
+                                        String bodyClass) {
         log().info(String.format(" Import nodes from OCS Inventory host =%s, login =%s", host, login));
         //java.lang.System.setProperty("javax.xml.soap.MessageFactory", "com.sun.xml.messaging.saaj.soap.ver1_1.SOAPMessageFactory1_1Impl");
         OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventoryClientLogicImp();
         req = new Requisition(foreignSource);
+        GroovyMappingLogic groovyMappingLogic = new GroovyMappingLogic();
+        RequisitionNode reqNode = null;
         try {
             ocsInventoryClientLogic.init(host, login, password);
             Computers comp = ocsInventoryClientLogic.getComputers();
-            for (Computer cmp : comp.getComputers()) {
+            for (Computer computer : comp.getComputers()) {
                 log().debug("import requisition nodes");
                 RequisitionInterface reqIface = new RequisitionInterface();
-                if (cmp.getHardware() != null && cmp.getHardware().getIpsrc() != null) {
-                    reqIface.setIpAddr(cmp.getHardware().getIpsrc());
+                if (computer.getHardware() != null && computer.getHardware().getIpsrc() != null) {
+                    reqIface.setIpAddr(computer.getHardware().getIpsrc());
                 }
                 reqIface.setManaged(true);
                 reqIface.setSnmpPrimary(PrimaryType.get("P"));
@@ -60,63 +61,69 @@ public class OcsInventoryUtils {
 
 
                 log().debug("set Interface");
-                RequisitionNode reqNode = new RequisitionNode();
-                if (cmp.getHardware().getName() != null) {
-                    reqNode.setNodeLabel(cmp.getHardware().getName());
+
+                reqNode = groovyMappingLogic.createRequisitionNodeFromGroovyScript(computer, bodyClass);
+                if( reqNode == null){
+                    reqNode = new RequisitionNode();
+
                 }
-                reqNode.setForeignId(String.valueOf(cmp.getHardware().getId()));
+
+                if (computer.getHardware().getName() != null && reqNode.getNodeLabel() == null) {
+                    reqNode.setNodeLabel(computer.getHardware().getName());
+                }
+                reqNode.setForeignId(String.valueOf(computer.getHardware().getId()));
                 reqNode.putInterface(reqIface);
                 log().debug("map manufacturer");
-                if (cmp.getBios() != null && cmp.getBios().getSManufacturer() != null) {
-                    reqNode.putAsset(new RequisitionAsset("manufacturer", cmp.getBios().getSManufacturer()));
+                if (computer.getBios() != null && computer.getBios().getSManufacturer() != null) {
+                    reqNode.putAsset(new RequisitionAsset("manufacturer", computer.getBios().getSManufacturer()));
                 }
 
                 log().debug("map modelNumber");
-                if (cmp.getBios().getSModel() != null) {
-                    reqNode.putAsset(new RequisitionAsset("modelNumber", cmp.getBios().getSModel()));
+                if (computer.getBios().getSModel() != null) {
+                    reqNode.putAsset(new RequisitionAsset("modelNumber", computer.getBios().getSModel()));
                 }
 
                 log().debug("map serialNumber");
-                reqNode.putAsset(new RequisitionAsset("serialNumber", String.valueOf(cmp.getBios().getSSN())));
+                reqNode.putAsset(new RequisitionAsset("serialNumber", String.valueOf(computer.getBios().getSSN())));
 
                 log().debug("map operatingSystem");
-                if (cmp.getHardware().getOsname() != null && cmp.getHardware().getOsversion() != null) {
-                    reqNode.putAsset(new RequisitionAsset("operatingSystem", cmp.getHardware().getOsname() + " " +
-                            cmp.getHardware().getOsversion()));
+                if (computer.getHardware().getOsname() != null && computer.getHardware().getOsversion() != null) {
+                    reqNode.putAsset(new RequisitionAsset("operatingSystem", computer.getHardware().getOsname() + " " +
+                            computer.getHardware().getOsversion()));
                 }
                 log().debug("set processors");
                 StringBuilder infProcessors = new StringBuilder();
-                infProcessors.append(String.valueOf(cmp.getHardware().getProcessorn()));
+                infProcessors.append(String.valueOf(computer.getHardware().getProcessorn()));
                 infProcessors.append("x ");
-                infProcessors.append(String.valueOf(cmp.getHardware().getProcessort()));
+                infProcessors.append(String.valueOf(computer.getHardware().getProcessort()));
                 infProcessors.append(" ");
-                infProcessors.append(String.valueOf(cmp.getHardware().getProcessors()));
-                reqNode.putAsset(new RequisitionAsset("ram", String.valueOf(cmp.getHardware().getMemory())));
+                infProcessors.append(String.valueOf(computer.getHardware().getProcessors()));
+                reqNode.putAsset(new RequisitionAsset("ram", String.valueOf(computer.getHardware().getMemory())));
                 reqNode.putAsset(new RequisitionAsset("cpu", infProcessors.toString()));
 
                 String url = "http://" + host + "/ocsreports/index.php?function=computer&head=1";
                 String info = "OCS Link";
                 StringBuilder comment = new StringBuilder();
-                comment.append(cmp.getHardware().getUseragent());
+                comment.append(computer.getHardware().getUseragent());
                 comment.append("- <a href=");
                 comment.append('"' + url);
                 comment.append("&systemid=");
-                comment.append(cmp.getHardware().getId() + '"');
+                comment.append(computer.getHardware().getId() + '"');
                 comment.append("target=\"_blank\">");
                 comment.append(info);
                 comment.append("</a>");
                 reqNode.putAsset(new RequisitionAsset("comment", comment.toString()));
 
-                if (cmp.getHardware().getOscomments() != null) {
-                    reqNode.putAsset(new RequisitionAsset("description", cmp.getHardware().getOscomments()));
+                if (computer.getHardware().getOscomments() != null) {
+                    reqNode.putAsset(new RequisitionAsset("description", computer.getHardware().getOscomments()));
                 }
 
-                if (cmp.getHardware().getUserId() != null) {
-                    reqNode.putAsset(new RequisitionAsset("username", cmp.getHardware().getUserId()));
+                if (computer.getHardware().getUserId() != null) {
+                    reqNode.putAsset(new RequisitionAsset("username", computer.getHardware().getUserId()));
                 }
                 int count = 0;
                 log().debug("set storages");
-                for (Storage storage : cmp.getStorages()) {
+                for (Storage storage : computer.getStorages()) {
                     StringBuilder disk = new StringBuilder();
                     disk.append(storage.getDisksize() / 1024);
                     disk.append(" MB, ");
@@ -130,7 +137,7 @@ public class OcsInventoryUtils {
                     count++;
                 }
                 //mapping category
-                addSurvCategories(cmp, namesCategCriteriaMap, typeCateg, reqNode);
+                //addSurvCategories(computer, namesCategCriteriaMap, typeCateg, reqNode);
 
                 req.putNode(reqNode);
 
