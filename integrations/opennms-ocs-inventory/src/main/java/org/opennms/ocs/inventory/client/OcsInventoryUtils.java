@@ -71,8 +71,12 @@ public class OcsInventoryUtils {
                 if (computer.getHardware().getName() != null && reqNode.getNodeLabel() == null) {
                     reqNode.setNodeLabel(computer.getHardware().getName());
                 }
-                reqNode.setForeignId(String.valueOf(computer.getHardware().getId()));
-                reqNode.putInterface(reqIface);
+                if (reqNode.getForeignId() == null) {
+                    reqNode.setForeignId(String.valueOf(computer.getHardware().getId()));
+                }
+                if (reqNode.getInterface().length == 0) {
+                    reqNode.putInterface(reqIface);
+                }
                 log().debug("map manufacturer");
                 if (computer.getBios() != null && computer.getBios().getSManufacturer() != null) {
                     reqNode.putAsset(new RequisitionAsset("manufacturer", computer.getBios().getSManufacturer()));
