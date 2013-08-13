@@ -32,9 +32,8 @@ public class GroovyMappingLogic {
         builder.append(bodyClass);
         builder.append("}");
 
-        //Class groovyClass = loader.parseClass(new File("src/test/groovy/script/MappingModelData.groovy"));
         Class groovyClass = loader.parseClass(builder.toString());
-        // let's call some method on an instance
+
         GroovyObject groovyObject = (GroovyObject) groovyClass.newInstance();
 
 

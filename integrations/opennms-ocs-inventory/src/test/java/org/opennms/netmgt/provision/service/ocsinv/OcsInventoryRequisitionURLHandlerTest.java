@@ -30,8 +30,10 @@ package org.opennms.netmgt.provision.service.ocsinv;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
 import java.net.URL;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.opennms.core.test.MockLogAppender;
@@ -47,10 +49,12 @@ public class OcsInventoryRequisitionURLHandlerTest {
 
     @Test
     public void testRequisitionImport() throws IOException {
-//    	URL ocsURL = new URL("ocsinv://dev:dev@192.168.56.101/foreignSource1");
-    	URL ocsURL = new URL("ocsinv://soapuser:ocsocsocs@192.168.34.28/foreignSource1");
+        URL ocsURL = new URL("ocsinv://dev:dev@192.168.56.101/foreignSource1");
+    	//URL ocsURL = new URL("ocsinv://soapuser:ocsocsocs@192.168.34.28/foreignSource1");
     	InputStream ocsInput = ocsURL.openStream();
-    	System.out.println(ocsInput.toString());
+        StringWriter writer = new StringWriter();
+        IOUtils.copy(ocsInput, writer, "UTF8");
+    	System.out.println(writer.toString());
     	ocsInput.close();
     }
 }
