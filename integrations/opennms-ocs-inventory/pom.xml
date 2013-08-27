@@ -46,6 +46,11 @@
             <artifactId>groovy</artifactId>
             <version>1.7-beta-2</version>
         </dependency>
+	    <dependency>
+	      <groupId>bsf</groupId>
+	      <artifactId>bsf</artifactId>
+	      <scope>compile</scope>
+	    </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

@@ -68,6 +68,7 @@ public class OcsInventoryRequisitionUrlConnection extends GenericURLConnection {
     private String m_username = null;
     private String m_password = null;
     private String m_foreignSource = null;
+    private static final String s_engine = "engine";
 
     private double m_minQuality = 0;
 
@@ -162,8 +163,11 @@ public class OcsInventoryRequisitionUrlConnection extends GenericURLConnection {
      * @return the requisition object
      */
     private Requisition buildOCSRequisition() {
-        String bodyClass = "";
-    	m_requisition = OcsInventoryUtils.importProvisionNodes(m_requisition, m_hostname, m_username, m_password, m_foreignSource, bodyClass);
+    	String engine = null;
+    	if(m_args.containsKey(s_engine)){
+    		engine = m_args.get(s_engine);
+    	}
+    	m_requisition = OcsInventoryUtils.importProvisionNodes(m_requisition, m_hostname, m_username, m_password, m_foreignSource, engine);
 
         return m_requisition;
     }

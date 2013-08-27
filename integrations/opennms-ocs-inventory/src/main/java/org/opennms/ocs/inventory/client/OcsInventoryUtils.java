@@ -1,13 +1,16 @@
 package org.opennms.ocs.inventory.client;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import groovy.lang.GroovyClassLoader;
-import groovy.lang.GroovyObject;
-import groovy.lang.MetaClass;
+import org.apache.commons.io.IOUtils;
 import org.opennms.core.utils.ThreadCategory;
 import org.opennms.netmgt.model.PrimaryType;
 import org.opennms.netmgt.provision.persist.SurvCategoryConstants;
@@ -31,19 +34,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 public class OcsInventoryUtils {
 
-
+private final static String s_path_to_script_folder="src/test/groovy/script/";
 
     /**
      * {@inheritDoc}
      */
     @Transactional
     public static Requisition importProvisionNodes(Requisition req, String host, String login, String password, String foreignSource,
-                                        String bodyClass) {
-        log().info(String.format(" Import nodes from OCS Inventory host =%s, login =%s", host, login));
+                                        String engine) {
+		log().info(
+				String.format(
+						" Import nodes from OCS Inventory host =%s, login =%s, foreignSource =%s, engine =%s",
+						host, login, foreignSource, engine));
+	String script = getContentScriptFromFile(foreignSource, engine);
         //java.lang.System.setProperty("javax.xml.soap.MessageFactory", "com.sun.xml.messaging.saaj.soap.ver1_1.SOAPMessageFactory1_1Impl");
         OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventoryClientLogicImp();
         req = new Requisition(foreignSource);
-        GroovyMappingLogic groovyMappingLogic = new GroovyMappingLogic();
+        ManagerScript m_gr = new ManagerScript();
         RequisitionNode reqNode = null;
         try {
             ocsInventoryClientLogic.init(host, login, password);
@@ -61,8 +68,15 @@ public class OcsInventoryUtils {
 
 
                 log().debug("set Interface");
-
-                reqNode = groovyMappingLogic.createRequisitionNodeFromGroovyScript(computer, bodyClass);
+                
+				if (script != null) {
+					Object obj = m_gr.executeScript(engine, script, foreignSource, computer);
+					if(obj != null && obj instanceof RequisitionNode){
+						reqNode = (RequisitionNode) obj;
+					}					
+				} else {
+					 log().warn("Script did not execute because content = " + script);
+				}
                 if( reqNode == null){
                     reqNode = new RequisitionNode();
 
@@ -487,6 +501,39 @@ public class OcsInventoryUtils {
 	    }
 	
 	    return false;
+	}
+	
+	/**
+	 * Gets the content script from file.
+	 *
+	 * @param filePath the file path
+	 * @return the content script from file
+	 */
+	private static String getContentScriptFromFile(String foreignSource, String engine){
+		String content = null;
+		if (foreignSource == null || foreignSource.isEmpty() || engine == null
+				|| engine.isEmpty()) {
+			return content;
+		}
+		StringBuilder builder = new StringBuilder();
+		builder.append(s_path_to_script_folder);
+		builder.append(foreignSource);
+		builder.append(".");
+		builder.append(engine);
+		
+		String filePath = builder.toString();
+		try {
+			content = IOUtils.toString(new FileReader(filePath));
+		} catch (FileNotFoundException e) {
+			log().error(String.format("File from path =%s not found", filePath));
+		} catch (IOException e) {
+			log().error(
+					String.format(
+							"Error while opening file from =%s, error message =%s",
+							filePath, e.getMessage()));
+		}
+		return content;
+		
 	}
 
 
