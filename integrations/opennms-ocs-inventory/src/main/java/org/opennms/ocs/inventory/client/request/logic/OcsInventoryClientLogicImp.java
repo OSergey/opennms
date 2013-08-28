@@ -63,6 +63,7 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
 
     /** The Constant WEB__SERVICE_METHOD. */
     private static final String WEB__SERVICE_METHOD = "get_computers_V1";
+    
 
     /*
      * (non-Javadoc)
