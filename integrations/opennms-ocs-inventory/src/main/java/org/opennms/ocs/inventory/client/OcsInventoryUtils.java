@@ -213,9 +213,6 @@ private static OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventor
 	 * @return the content script from file
 	 */
 	private static String getContentScriptFromFile(String foreignSource, String engine){
-        StringBuilder concatPathBuilder = new StringBuilder();
-        concatPathBuilder.append(ConfigFileConstants.getHome());
-        concatPathBuilder.append(s_path_to_script_folder);
 
 		String content = null;
 		if (foreignSource == null || foreignSource.isEmpty() || engine == null
@@ -223,7 +220,8 @@ private static OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventor
 			return content;
 		}
 		StringBuilder builder = new StringBuilder();
-		builder.append(concatPathBuilder.toString());
+        builder.append(ConfigFileConstants.getHome());
+		builder.append(s_path_to_script_folder);
 		builder.append(foreignSource);
 		builder.append(".");
 		builder.append(engine);
