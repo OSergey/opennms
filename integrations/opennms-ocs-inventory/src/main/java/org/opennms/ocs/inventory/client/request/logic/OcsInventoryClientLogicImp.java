@@ -103,13 +103,15 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
         String content = "";
         for (int i = 1; i < soapElement.getChildNodes().getLength() - 1; i++) {
             content = soapElement.getChildNodes().item(i).getTextContent();
-            byte[] decodedBytes = Base64.decodeBase64(content.getBytes());
-            soapElement.getChildNodes().item(i).setTextContent(new String(
-                                                                          decodedBytes)
-                                                                       + "\n");
+			if (!content.startsWith("<")) {
+				byte[] decodedBytes = Base64.decodeBase64(content.getBytes());
+				soapElement.getChildNodes().item(i)
+						.setTextContent(new String(decodedBytes) + "\n");
+			}
         }
 
         content = soapElement.getTextContent();
+       
         JAXBContext jaxbContext = JAXBContext.newInstance(Computers.class);
         Unmarshaller jaxbMarshaller = jaxbContext.createUnmarshaller();
         InputStream is = new ByteArrayInputStream(content.getBytes());

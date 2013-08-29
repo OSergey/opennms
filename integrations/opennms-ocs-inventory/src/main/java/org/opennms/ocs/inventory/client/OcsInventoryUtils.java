@@ -6,18 +6,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
 import org.opennms.core.utils.ConfigFileConstants;
 import org.opennms.core.utils.ThreadCategory;
 import org.opennms.netmgt.model.PrimaryType;
-import org.opennms.netmgt.provision.persist.SurvCategoryConstants;
 import org.opennms.netmgt.provision.persist.requisition.Requisition;
 import org.opennms.netmgt.provision.persist.requisition.RequisitionAsset;
-import org.opennms.netmgt.provision.persist.requisition.RequisitionCategory;
 import org.opennms.netmgt.provision.persist.requisition.RequisitionInterface;
 import org.opennms.netmgt.provision.persist.requisition.RequisitionMonitoredService;
 import org.opennms.netmgt.provision.persist.requisition.RequisitionNode;
@@ -25,12 +20,7 @@ import org.opennms.ocs.inventory.client.request.logic.OcsInventoryClientLogic;
 import org.opennms.ocs.inventory.client.request.logic.OcsInventoryClientLogicImp;
 import org.opennms.ocs.inventory.client.response.Computer;
 import org.opennms.ocs.inventory.client.response.Computers;
-import org.opennms.ocs.inventory.client.response.Controller;
-import org.opennms.ocs.inventory.client.response.Drive;
-import org.opennms.ocs.inventory.client.response.Software;
-import org.opennms.ocs.inventory.client.response.Sound;
 import org.opennms.ocs.inventory.client.response.Storage;
-import org.opennms.ocs.inventory.client.response.Video;
 import org.springframework.transaction.annotation.Transactional;
 
 public class OcsInventoryUtils {
@@ -56,12 +46,12 @@ private static OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventor
 		// "com.sun.xml.messaging.saaj.soap.ver1_1.SOAPMessageFactory1_1Impl");
 		req = new Requisition(foreignSource);
 		ManagerScript m_gr = new ManagerScript();
-		RequisitionNode reqNode = null;
         try {
-            ocsInventoryClientLogic.init(host, login, password);
+        	ocsInventoryClientLogic.init(host, login, password);
             Computers comp = ocsInventoryClientLogic.getComputers();
             if( comp != null ){
 				for (Computer computer : comp.getComputers()) {
+					RequisitionNode reqNode = null;
 					log().debug("import requisition nodes");
 					RequisitionInterface reqIface = new RequisitionInterface();
 					if (computer.getHardware() != null
@@ -190,16 +180,7 @@ private static OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventor
             e.printStackTrace(printWriter);
             log().error(String.format("Error cause: %s; error message: %s stack trace: %s", e.getCause(), e.getMessage(), writer.toString()));
         }
-/*        try {
-            log().debug("saving requisition node");
-            //m_foreignSourceRepository.save(req);
-        } catch (ForeignSourceRepositoryException e) {
-            throw new RuntimeException("unable to retrieve foreign source '" + foreignSource + "'", e);
-        }
-        Event e = new EventBuilder(EventConstants.RELOAD_IMPORT_UEI, "NodeProvisionService")
-                .addParam("url", m_foreignSourceRepository.getRequisitionURL(foreignSource).toString())
-                .getEvent();
-        m_eventForwarder.sendNow(e);*/
+
         log().warn("about to return (" + System.currentTimeMillis() + ")");
         return req;
     }
