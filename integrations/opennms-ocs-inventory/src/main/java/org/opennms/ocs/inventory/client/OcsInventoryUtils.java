@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
+import org.opennms.core.utils.ConfigFileConstants;
 import org.opennms.core.utils.ThreadCategory;
 import org.opennms.netmgt.model.PrimaryType;
 import org.opennms.netmgt.provision.persist.SurvCategoryConstants;
@@ -35,10 +36,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class OcsInventoryUtils {
 
 /** The Constant s_path_to_script_folder. */
-private final static String s_path_to_script_folder="src/test/groovy/script/";
+private final static String s_path_to_script_folder="/etc/ocs-scripts/";//"src/test/groovy/script/";
 
-/** The ocs inventory client logic. */
-public static OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventoryClientLogicImp();
+    /** The ocs inventory client logic. */
+private static OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventoryClientLogicImp();
 
     /**
      * {@inheritDoc}
@@ -178,10 +179,6 @@ public static OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventory
 							count++;
 						}
 					}
-					// mapping category
-					// addSurvCategories(computer, namesCategCriteriaMap,
-					// typeCateg, reqNode);
-
 					req.putNode(reqNode);
 
 					log().debug("saving requisition node");
@@ -206,346 +203,29 @@ public static OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventory
         log().warn("about to return (" + System.currentTimeMillis() + ")");
         return req;
     }
-    
-    /**
-     * This method contains mapping categories
-     */
-    private static void addSurvCategories(Computer computer, Map<String, List<String>> namesCategCriteriaMap,
-                                   List<String> typeCateg, RequisitionNode reqNode) {
-
-        for (String category : namesCategCriteriaMap.keySet()) {
-            for (String criteria : namesCategCriteriaMap.get(category)) {
-                boolean categoryAdded = false;
-                Pattern pattern =
-                        Pattern.compile(criteria, Pattern.CASE_INSENSITIVE);
-                if (typeCateg.isEmpty()) {
-                    if(mapBiosCategory(reqNode, pattern, computer, categoryAdded, category)){
-                        break;
-                    }
-                    if(mapControllerCategory(reqNode, pattern, computer, categoryAdded, category)){
-                        break;
-                    }
-                    if(mapDriveCategory(reqNode, pattern, computer, categoryAdded, category)){
-                        break;
-                    }
-                    if(mapHardwareCategory(reqNode, pattern, computer, categoryAdded, category)){
-                        break;
-                    }
-                    if(mapNetworkCategory(reqNode, pattern, computer, categoryAdded, category)){
-                        break;
-                    }
-                    if(mapSoundCategory(reqNode, pattern, computer, categoryAdded, category)){
-                        break;
-                    }
-                    if(mapStorageCategory(reqNode, pattern, computer, categoryAdded, category)){
-                        break;
-                    }
-                    if(mapVideoCategory(reqNode, pattern, computer, categoryAdded, category)){
-                        break;
-                    }
-                } else {
-                    for (String type : typeCateg) {
-                        if (type.equals(SurvCategoryConstants.s_bios)) {
-                            categoryAdded = mapBiosCategory(reqNode, pattern, computer, categoryAdded, category);
-                            break;
-                        }
-                        if (type.equals(SurvCategoryConstants.s_controller) && !categoryAdded) {
-                            categoryAdded = mapControllerCategory(reqNode, pattern, computer, categoryAdded, category);
-                            break;
-
-                        }
-                        if (type.equals(SurvCategoryConstants.s_drive) && !categoryAdded) {
-                            categoryAdded = mapDriveCategory(reqNode, pattern, computer, categoryAdded, category);
-                            break;
-
-                        }
-                        if (type.equals(SurvCategoryConstants.s_hardware) && !categoryAdded) {
-                            categoryAdded = mapHardwareCategory(reqNode, pattern, computer, categoryAdded, category);
-                            break;
-
-                        }
-                        if (type.equals(SurvCategoryConstants.s_network) && !categoryAdded) {
-                            categoryAdded = mapNetworkCategory(reqNode, pattern, computer, categoryAdded, category);
-                            break;
-
-                        }
-                        if (type.equals(SurvCategoryConstants.s_software) && !categoryAdded) {
-                            categoryAdded = mapSoftwareCategory(reqNode, pattern, computer, categoryAdded, category);
-                            break;
-
-                        }
-                        if (type.equals(SurvCategoryConstants.s_sound) && !categoryAdded) {
-                            categoryAdded = mapSoundCategory(reqNode, pattern, computer, categoryAdded, category);
-                            break;
-
-                        }
-                        if (type.equals(SurvCategoryConstants.s_storage) && !categoryAdded) {
-                            categoryAdded = mapStorageCategory(reqNode, pattern, computer, categoryAdded, category);
-                            break;
-
-                        }
-                        if (type.equals(SurvCategoryConstants.s_video) && !categoryAdded) {
-                            categoryAdded = mapVideoCategory(reqNode, pattern, computer, categoryAdded, category);
-                            break;
-
-                        }
-
-                    }
-                }
-                if (categoryAdded) {
-                    break;
-                }
-            }
-        }
 
 
-    }
-    
-	/**
-	 * This method contains mapping type bios category
-	 */
-	private static boolean mapBiosCategory(RequisitionNode reqNode, Pattern pattern,
-	                             Computer computer, boolean categoryAdded, String category){
-	    if (pattern.matcher(computer.getBios().getBVersion()).find() && !categoryAdded) {
-	        reqNode.putCategory(new RequisitionCategory(category));
-	        categoryAdded = true;
-	        return categoryAdded;
-	    }
-	    if (pattern.matcher(computer.getBios().getBManufacturer()).find() && !categoryAdded) {
-	        reqNode.putCategory(new RequisitionCategory(category));
-	        categoryAdded = true;
-	        return categoryAdded;
-	    }
-	    if (pattern.matcher(computer.getBios().getSModel()).find() && !categoryAdded) {
-	        reqNode.putCategory(new RequisitionCategory(category));
-	        categoryAdded = true;
-	        return categoryAdded;
-	    }
-	    return false;
-	}
-
-	/**
-	 * This method contains mapping type controller category
-	 */
-	private static boolean mapControllerCategory(RequisitionNode reqNode, Pattern pattern,
-	                                Computer computer, boolean categoryAdded, String category){
-	    for (Controller controller : computer.getControllers()) {
-	        if (pattern.matcher(controller.getManufacturer()).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	        if (pattern.matcher(controller.getName()).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	    }
-	    return false;
-	}
-
-	/**
-	 * This method contains mapping type drive category
-	 */
-	private static boolean mapDriveCategory(RequisitionNode reqNode, Pattern pattern,
-	                                      Computer computer, boolean categoryAdded, String category){
-	    for (Drive drive : computer.getDrives()) {
-	        if (pattern.matcher(drive.getFilesystem()).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	        if (pattern.matcher(drive.getVolumn()).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	    }
-	    return false;
-	}
-
-	/**
-	 * This method contains mapping type hardware category
-	 */
-	private static boolean mapHardwareCategory(RequisitionNode reqNode, Pattern pattern,
-	                                Computer computer, boolean categoryAdded, String category){
-	    if (pattern.matcher(computer.getHardware().getIpaddr()).find() && !categoryAdded) {
-	        reqNode.putCategory(new RequisitionCategory(category));
-	        categoryAdded = true;
-	        return categoryAdded;
-	    }
-	    if (pattern.matcher(computer.getHardware().getName()).find() && !categoryAdded) {
-	        reqNode.putCategory(new RequisitionCategory(category));
-	        categoryAdded = true;
-	        return categoryAdded;
-	    }
-	    if (pattern.matcher(computer.getHardware().getOsname()).find() && !categoryAdded) {
-	        reqNode.putCategory(new RequisitionCategory(category));
-	        categoryAdded = true;
-	        return categoryAdded;
-	    }
-	    if (pattern.matcher(computer.getHardware().getOsversion()).find() && !categoryAdded) {
-	        reqNode.putCategory(new RequisitionCategory(category));
-	        categoryAdded = true;
-	        return categoryAdded;
-	    }
-	    if (pattern.matcher(computer.getHardware().getProcessort()).find() && !categoryAdded) {
-	        reqNode.putCategory(new RequisitionCategory(category));
-	        categoryAdded = true;
-	        return categoryAdded;
-	    }
-	    if (pattern.matcher(computer.getHardware().getWorkGroup()).find() && !categoryAdded) {
-	        reqNode.putCategory(new RequisitionCategory(category));
-	        categoryAdded = true;
-	        return categoryAdded;
-	    }
-	    return false;
-	}
-
-	/**
-	 * This method contains mapping type network category
-	 */
-	private static boolean mapNetworkCategory(RequisitionNode reqNode, Pattern pattern,
-	                                 Computer computer, boolean categoryAdded, String category){
-	        if (pattern.matcher(computer.getNetworks().getDescription()).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	        if (pattern.matcher(computer.getNetworks().getIPSubnet()).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	
-	    return false;
-	}
-
-	/**
-	 * This method contains mapping type software category
-	 */
-	private static boolean mapSoftwareCategory(RequisitionNode reqNode, Pattern pattern,
-	                                 Computer computer, boolean categoryAdded, String category){
-	    for (Software software : computer.getSoftwares()) {
-	        if (pattern.matcher(software.getName()).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	        if (pattern.matcher(software.getVersion()).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	    }
-	    return false;
-	}
-
-	/**
-	 * This method contains mapping type sound category
-	 */
-	
-	private static boolean mapSoundCategory(RequisitionNode reqNode, Pattern pattern,
-	                                    Computer computer, boolean categoryAdded, String category){
-	    for (Sound sound : computer.getSounds()) {
-	        if (pattern.matcher(sound.getManufacturer()).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	    }
-	
-	    return false;
-	}
-
-	/**
-	 * This method contains mapping type storage category
-	 */
-	
-	private static boolean mapStorageCategory(RequisitionNode reqNode, Pattern pattern,
-	                                 Computer computer, boolean categoryAdded, String category){
-	    for (Storage storage : computer.getStorages()) {
-	        if (pattern.matcher(storage.getDescription()).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	
-	        if (pattern.matcher(String.valueOf(storage.getDisksize() / 1024)).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	
-	        if (pattern.matcher(storage.getManufacturer()).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	
-	        if (pattern.matcher(storage.getModel()).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	    }
-	
-	    return false;
-	}
-
-	/**
-	 * This method contains mapping type video category
-	 */
-	
-	private static boolean mapVideoCategory(RequisitionNode reqNode, Pattern pattern,
-	                                   Computer computer, boolean categoryAdded, String category){
-	    for (Video video : computer.getVideos()) {
-	        if (pattern.matcher(video.getChipset()).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	
-	        if (pattern.matcher(video.getMemory()).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	
-	        if (pattern.matcher(video.getName()).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	
-	        if (pattern.matcher(video.getResolution()).find() && !categoryAdded) {
-	            reqNode.putCategory(new RequisitionCategory(category));
-	            categoryAdded = true;
-	            return categoryAdded;
-	        }
-	    }
-	
-	    return false;
-	}
-	
 	/**
 	 * Gets the content script from file.
 	 *
-	 * @param filePath the file path
+	 * @param foreignSource
+     * @param engine
 	 * @return the content script from file
 	 */
 	private static String getContentScriptFromFile(String foreignSource, String engine){
+
 		String content = null;
 		if (foreignSource == null || foreignSource.isEmpty() || engine == null
 				|| engine.isEmpty()) {
 			return content;
 		}
 		StringBuilder builder = new StringBuilder();
+        builder.append(ConfigFileConstants.getHome());
 		builder.append(s_path_to_script_folder);
 		builder.append(foreignSource);
 		builder.append(".");
 		builder.append(engine);
-		
+
 		String filePath = builder.toString();
 		try {
 			content = IOUtils.toString(new FileReader(filePath));
@@ -558,8 +238,17 @@ public static OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventory
 							filePath, e.getMessage()));
 		}
 		return content;
-		
+
 	}
+
+    /**
+     * Sets ocs inventory client logic.
+     *
+     * @param ocsInventoryClientLogic the ocs inventory client logic
+     */
+    public static void setOcsInventoryClientLogic(OcsInventoryClientLogic ocsInventoryClientLogic) {
+        OcsInventoryUtils.ocsInventoryClientLogic = ocsInventoryClientLogic;
+    }
 
 	/**
      * <p>log</p>

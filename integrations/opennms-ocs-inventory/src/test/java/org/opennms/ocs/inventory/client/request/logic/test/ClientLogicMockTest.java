@@ -16,10 +16,12 @@ import org.opennms.ocs.inventory.client.response.Computers;
 
 public class ClientLogicMockTest {
 
+    private OcsInventoryClientLogic ocsInventoryClientLogic;
+
     @Before
     public void setUp() throws Exception {
         MockLogAppender.setupLogging();
-        OcsInventoryUtils.ocsInventoryClientLogic = mock(OcsInventoryClientLogic.class);
+        ocsInventoryClientLogic = mock(OcsInventoryClientLogic.class);
     }
 
     @Test
@@ -31,7 +33,8 @@ public class ClientLogicMockTest {
         computer.setBios(bs);
         Computers cmps = new Computers();
         cmps.getComputers().add(computer);
-    	when(OcsInventoryUtils.ocsInventoryClientLogic.getComputers()).thenReturn(cmps);
+    	when(ocsInventoryClientLogic.getComputers()).thenReturn(cmps);
+        OcsInventoryUtils.setOcsInventoryClientLogic(ocsInventoryClientLogic);
     	Requisition req = null;
     	req = OcsInventoryUtils.importProvisionNodes(req, "192.168.56.101", "dev", "dev", "foreignSource1", "groovy");
     	System.out.println(req);
