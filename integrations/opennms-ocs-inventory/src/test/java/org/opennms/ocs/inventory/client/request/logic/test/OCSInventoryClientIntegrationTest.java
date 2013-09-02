@@ -32,7 +32,7 @@ public class OCSInventoryClientIntegrationTest {
     public void test() {
         OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventoryClientLogicImp();
         try {
-            ocsInventoryClientLogic.init(host, login, password);
+            ocsInventoryClientLogic.init(host, login, password, null);
 
             Computers comp = ocsInventoryClientLogic.getComputers();
             

@@ -19,7 +19,7 @@ public interface OcsInventoryClientLogic {
      * @param password the password
      * @throws SOAPException 
      */
-    void init(String host, String login, String password) throws SOAPException;
+    void init(String host, String login, String password, String checksum) throws SOAPException;
 
     /**
      * Gets the computers.

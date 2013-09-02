@@ -58,8 +58,9 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
     /** The Constant ASKINGFOR. */
     private static final String m_askingFor = "INVENTORY";
 
-    /** The Constant CHECKSUM. */
-    private static final String m_checksum = "119587";
+    
+    /** The m_checksum. */
+    private static String m_checksum = "119587";
 
     /** The Constant WEB__SERVICE_METHOD. */
     private static final String m_web_service_method = "get_computers_V1";
@@ -71,7 +72,7 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
      * org.opennms.ocs.inventory.client.request.logic.OcsInventoryClientLogic
      * #init(java.lang.String, java.lang.String, java.lang.String)
      */
-    public void init(String host, String login, String password)
+    public void init(String host, String login, String password, String checksum)
             throws SOAPException {
         log().info("Initialization OCS Inventory Client");
         log().info("Init parameters: host="+ host + ", login="+login);
@@ -82,6 +83,9 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
         m_urlNameSpaceXml = String.format("http://%s/Apache/Ocsinventory/Interface",
                                           host);
 
+        if (checksum != null){
+        	m_checksum = checksum;	
+        }
         SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
         m_soapConnection = soapConnectionFactory.createConnection();
 

@@ -36,7 +36,7 @@ private static OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventor
      */
     @Transactional
     public static Requisition importProvisionNodes(Requisition req, String host, String login, String password, String foreignSource,
-                                        String engine) {
+                                        String engine, String checkSum) {
 		log().info(
 				String.format(
 						" Import nodes from OCS Inventory host =%s, login =%s, foreignSource =%s, engine =%s",
@@ -47,7 +47,7 @@ private static OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventor
 		req = new Requisition(foreignSource);
 		ManagerScript m_gr = new ManagerScript();
         try {
-        	ocsInventoryClientLogic.init(host, login, password);
+        	ocsInventoryClientLogic.init(host, login, password, checkSum);
             Computers comp = ocsInventoryClientLogic.getComputers();
             if( comp != null ){
 				for (Computer computer : comp.getComputers()) {
