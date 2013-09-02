@@ -50,19 +50,19 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
     private static String m_password;
 
     /** The soap connection. */
-    private SOAPConnection soapConnection;
+    private SOAPConnection m_soapConnection;
 
     /** The Constant ENGINE. */
-    private static final String ENGINE = "FIRST";
+    private static final String m_engine = "FIRST";
 
     /** The Constant ASKINGFOR. */
-    private static final String ASKINGFOR = "INVENTORY";
+    private static final String m_askingFor = "INVENTORY";
 
     /** The Constant CHECKSUM. */
-    private static final String CHECKSUM = "119587";
+    private static final String m_checksum = "119587";
 
     /** The Constant WEB__SERVICE_METHOD. */
-    private static final String WEB__SERVICE_METHOD = "get_computers_V1";
+    private static final String m_web_service_method = "get_computers_V1";
     
 
     /*
@@ -83,7 +83,7 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
                                           host);
 
         SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
-        soapConnection = soapConnectionFactory.createConnection();
+        m_soapConnection = soapConnectionFactory.createConnection();
 
     }
 
@@ -95,7 +95,7 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
      */
     public Computers getComputers() throws SOAPException, Exception {
         log().info("Prepare call web service from OCS server");
-        SOAPMessage soapResponse = soapConnection.call(createSOAPRequest(),
+        SOAPMessage soapResponse = m_soapConnection.call(createSOAPRequest(),
                                                        m_url);
         log().info("Web service are already called from OCS server, parse response");
         SOAPBody spBody = soapResponse.getSOAPBody();
@@ -157,19 +157,19 @@ public class OcsInventoryClientLogicImp implements OcsInventoryClientLogic {
         RequestFactory objFact = new RequestFactory();
         Request request = objFact.createRequest();
         Engine eng = new Engine();
-        eng.setValue(ENGINE);
+        eng.setValue(m_engine);
         request.setEngine(eng);
-        request.setAskingfor(ASKINGFOR);
-        request.setChecksum(CHECKSUM);
+        request.setAskingfor(m_askingFor);
+        request.setChecksum(m_checksum);
         request.setOffset("0");
-        request.setWanted(CHECKSUM);
+        request.setWanted(m_checksum);
         JAXBContext jaxbContext = JAXBContext.newInstance(Request.class);
         Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
         StringWriter writer = new StringWriter();
         jaxbMarshaller.marshal(request, writer);
         SOAPBody soapBody = envelope.getBody();
 
-        QName bodyName = new QName(m_urlNameSpaceXml, WEB__SERVICE_METHOD,
+        QName bodyName = new QName(m_urlNameSpaceXml, m_web_service_method,
                                    XMLConstants.DEFAULT_NS_PREFIX);
         SOAPBodyElement bodyElement = soapBody.addBodyElement(bodyName);
         SOAPElement soapBodyElem1 = bodyElement.addChildElement("c-gensym3");
