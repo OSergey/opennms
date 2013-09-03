@@ -36,7 +36,7 @@ public class ClientLogicMockTest {
     	when(ocsInventoryClientLogic.getComputers()).thenReturn(cmps);
         OcsInventoryUtils.setOcsInventoryClientLogic(ocsInventoryClientLogic);
     	Requisition req = null;
-    	req = OcsInventoryUtils.importProvisionNodes(req, "192.168.56.101", "dev", "dev", "foreignSource1", "groovy");
+    	req = OcsInventoryUtils.importProvisionNodes(req, "192.168.56.101", "dev", "dev", "foreignSource1", "groovy", "35075");
     	System.out.println(req);
     }
 

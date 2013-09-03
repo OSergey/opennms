@@ -68,7 +68,17 @@ public class OcsInventoryRequisitionUrlConnection extends GenericURLConnection {
     private String m_username = null;
     private String m_password = null;
     private String m_foreignSource = null;
+    private String m_url_protocol_with_hostname = null;
+    
+    /** The Constant s_engine. */
     private static final String s_engine = "engine";
+    
+    /** The Constant s_checkSum. */
+    private static final String s_checkSum = "checksum";
+
+    private static final String s_protocol = "protocol";
+
+    private static final String s_default_protocol = "http://";
 
     private double m_minQuality = 0;
 
@@ -86,8 +96,8 @@ public class OcsInventoryRequisitionUrlConnection extends GenericURLConnection {
      * Constructor for creating an instance of this class.
      *
      * @param url the URL to use
-     * @throws MalformedURLException
-     * @throws RemoteException
+     * @throws MalformedURLException the malformed uRL exception
+     * @throws MalformedURLException the remote exception
      */
     public OcsInventoryRequisitionUrlConnection(URL url) throws MalformedURLException, RemoteException {
         super(url);
@@ -117,6 +127,18 @@ public class OcsInventoryRequisitionUrlConnection extends GenericURLConnection {
         } else {
             throw new MalformedURLException("Error processing path element of URL (ocsinv://username:password@host[/foreign-source]?keyA=valueA;keyB=valueB;...)");
         }
+        StringBuilder builderUrl = new StringBuilder();
+        if(m_args.containsKey(s_protocol)){
+
+            builderUrl.append(m_args.get(s_protocol));
+            builderUrl.append("://");
+        } else {
+
+            builderUrl.append(s_default_protocol);
+        }
+        builderUrl.append(m_hostname);
+        m_url_protocol_with_hostname = builderUrl.toString();
+
     }
 
     /**
@@ -167,7 +189,11 @@ public class OcsInventoryRequisitionUrlConnection extends GenericURLConnection {
     	if(m_args.containsKey(s_engine)){
     		engine = m_args.get(s_engine);
     	}
-    	m_requisition = OcsInventoryUtils.importProvisionNodes(m_requisition, m_hostname, m_username, m_password, m_foreignSource, engine);
+    	String checkSum = null;
+    	if(m_args.containsKey(s_checkSum)){
+    		checkSum = m_args.get(s_checkSum);
+    	}
+    	m_requisition = OcsInventoryUtils.importProvisionNodes(m_requisition, m_url_protocol_with_hostname, m_username, m_password, m_foreignSource, engine, checkSum);
 
         return m_requisition;
     }

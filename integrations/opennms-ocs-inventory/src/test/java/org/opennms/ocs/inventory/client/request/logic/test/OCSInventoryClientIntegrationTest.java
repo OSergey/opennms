@@ -14,7 +14,7 @@ import java.util.Properties;
 public class OCSInventoryClientIntegrationTest {
 
     /** The host. */
-    private String host = "192.168.56.101";
+    private String host = "http://192.168.56.101";
 
     /** The login. */
     private String login = "dev";
@@ -32,7 +32,7 @@ public class OCSInventoryClientIntegrationTest {
     public void test() {
         OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventoryClientLogicImp();
         try {
-            ocsInventoryClientLogic.init(host, login, password);
+            ocsInventoryClientLogic.init(host, login, password, null);
 
             Computers comp = ocsInventoryClientLogic.getComputers();
             
