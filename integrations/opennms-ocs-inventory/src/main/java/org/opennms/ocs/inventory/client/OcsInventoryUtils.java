@@ -16,8 +16,7 @@ import org.opennms.netmgt.provision.persist.requisition.RequisitionAsset;
 import org.opennms.netmgt.provision.persist.requisition.RequisitionInterface;
 import org.opennms.netmgt.provision.persist.requisition.RequisitionMonitoredService;
 import org.opennms.netmgt.provision.persist.requisition.RequisitionNode;
-import org.opennms.ocs.inventory.client.request.logic.OcsInventoryClientLogic;
-import org.opennms.ocs.inventory.client.request.logic.OcsInventoryClientLogicImp;
+import org.opennms.ocs.inventory.client.request.logic.OcsInventoryClientLogicExecuter;
 import org.opennms.ocs.inventory.client.response.Computer;
 import org.opennms.ocs.inventory.client.response.Computers;
 import org.opennms.ocs.inventory.client.response.Storage;
@@ -29,7 +28,7 @@ public class OcsInventoryUtils {
 private final static String s_path_to_script_folder="/etc/ocs-scripts/";//"src/test/groovy/script/";
 
     /** The ocs inventory client logic. */
-private static OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventoryClientLogicImp();
+private static OcsInventoryClientLogicExecuter ocsInventoryClientLogic = new OcsInventoryClientLogicExecuter();
 
     /**
      * {@inheritDoc}
@@ -47,8 +46,7 @@ private static OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventor
 		req = new Requisition(foreignSource);
 		ManagerScript m_gr = new ManagerScript();
         try {
-        	ocsInventoryClientLogic.init(host, login, password, checkSum);
-            Computers comp = ocsInventoryClientLogic.getComputers();
+            Computers comp = ocsInventoryClientLogic.getComputers(host, login, password, checkSum);
             if( comp != null ){
 				for (Computer computer : comp.getComputers()) {
 					RequisitionNode reqNode = null;
@@ -227,7 +225,7 @@ private static OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventor
      *
      * @param ocsInventoryClientLogic the ocs inventory client logic
      */
-    public static void setOcsInventoryClientLogic(OcsInventoryClientLogic ocsInventoryClientLogic) {
+    public static void setOcsInventoryClientLogic(OcsInventoryClientLogicExecuter ocsInventoryClientLogic) {
         OcsInventoryUtils.ocsInventoryClientLogic = ocsInventoryClientLogic;
     }
 

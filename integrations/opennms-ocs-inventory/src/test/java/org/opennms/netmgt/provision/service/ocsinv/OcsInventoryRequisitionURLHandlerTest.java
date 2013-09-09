@@ -50,7 +50,8 @@ public class OcsInventoryRequisitionURLHandlerTest {
     @Test
     public void testRequisitionImport() throws IOException {
         //URL ocsURL = new URL("ocsinv://dev:dev@192.168.56.101/foreignSource2?protocol=http&engine=groovy&checksum=35075");
-        URL ocsURL = new URL("ocsinv://ocs-soap:ocsrockz@doku.informatik.hs-fulda.de/foreignSource2?protocol=http&engine=groovy&checksum=35075");// checksum="119587" - all data
+        //URL ocsURL = new URL("ocsinv://ocs-soap:ocsrockz@doku.informatik.hs-fulda.de/foreignSource2?protocol=http&engine=groovy&checksum=35075");// checksum="119587" - all data
+    	URL ocsURL = new URL("ocsinv://OpenNMS_System:0p3nNMS!@ocs-test.bonnierdigitalservices.se/foreignSource2?protocol=https&engine=groovy");
     	//URL ocsURL = new URL("ocsinv://soapuser:ocsocsocs@192.168.34.28/foreignSource1");
     	InputStream ocsInput = ocsURL.openStream();
         StringWriter writer = new StringWriter();

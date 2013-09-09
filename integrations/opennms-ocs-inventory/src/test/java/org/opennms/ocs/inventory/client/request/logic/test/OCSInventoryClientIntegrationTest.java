@@ -4,12 +4,9 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.opennms.core.test.MockLogAppender;
-import org.opennms.ocs.inventory.client.request.logic.OcsInventoryClientLogic;
-import org.opennms.ocs.inventory.client.request.logic.OcsInventoryClientLogicImp;
+import org.opennms.ocs.inventory.client.request.logic.OcsInventoryClientLogicExecuter;
 import org.opennms.ocs.inventory.client.response.Computer;
 import org.opennms.ocs.inventory.client.response.Computers;
-
-import java.util.Properties;
 
 public class OCSInventoryClientIntegrationTest {
 
@@ -30,11 +27,10 @@ public class OCSInventoryClientIntegrationTest {
 
     @Test
     public void test() {
-        OcsInventoryClientLogic ocsInventoryClientLogic = new OcsInventoryClientLogicImp();
+        OcsInventoryClientLogicExecuter ocsInventoryClientLogic = new OcsInventoryClientLogicExecuter();
         try {
-            ocsInventoryClientLogic.init(host, login, password, null);
 
-            Computers comp = ocsInventoryClientLogic.getComputers();
+            Computers comp = ocsInventoryClientLogic.getComputers(host, login, password, null);
             
             assertNotNull(comp);
             for (Computer cmp: comp.getComputers()){
